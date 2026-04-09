@@ -69,7 +69,9 @@ import PageHeader from '@/components/PageHeader.astro';
               placeholder="例：山田 太郎"
               required
               autocomplete="name"
+              aria-describedby="name-error"
             />
+            <span class="form-error" id="name-error" aria-live="polite"></span>
           </div>
 
           <!-- メールアドレス -->
@@ -85,7 +87,9 @@ import PageHeader from '@/components/PageHeader.astro';
               placeholder="例：example@email.com"
               required
               autocomplete="email"
+              aria-describedby="email-error"
             />
+            <span class="form-error" id="email-error" aria-live="polite"></span>
           </div>
 
           <!-- 電話番号 -->
@@ -100,7 +104,9 @@ import PageHeader from '@/components/PageHeader.astro';
               class="form-input"
               placeholder="例：090-0000-0000"
               autocomplete="tel"
+              aria-describedby="phone-error"
             />
+            <span class="form-error" id="phone-error" aria-live="polite"></span>
           </div>
 
           <!-- お問い合わせ種別 -->
@@ -114,6 +120,7 @@ import PageHeader from '@/components/PageHeader.astro';
                 name="inquiry-type"
                 class="form-select"
                 required
+                aria-describedby="inquiry-type-error"
               >
                 <option value="" disabled selected>選択してください</option>
                 <option value="不動産の購入について">不動産の購入について</option>
@@ -126,6 +133,7 @@ import PageHeader from '@/components/PageHeader.astro';
                 <path d="M1 1L6 7L11 1" stroke="#8C96A8" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
             </div>
+            <span class="form-error" id="inquiry-type-error" aria-live="polite"></span>
           </div>
 
           <!-- メッセージ -->
@@ -140,23 +148,26 @@ import PageHeader from '@/components/PageHeader.astro';
               rows="7"
               placeholder="ご相談内容・ご要望をできるだけ詳しくお書きください。"
               required
+              aria-describedby="message-error"
             ></textarea>
+            <span class="form-error" id="message-error" aria-live="polite"></span>
           </div>
 
           <!-- 個人情報の取り扱い -->
           <div class="form-field form-field--full">
-            <div class="form-privacy">
+            <div class="form-privacy" id="privacy-box">
               <p class="form-privacy__text">
                 ご入力いただいた個人情報は、お問い合わせへの返答および弊社サービスのご案内のみに使用し、第三者への提供はいたしません。
               </p>
               <label class="form-checkbox">
-                <input type="checkbox" name="個人情報の取り扱いへの同意" value="同意する" required />
+                <input type="checkbox" id="agree" name="個人情報の取り扱いへの同意" value="同意する" required aria-describedby="agree-error" />
                 <span class="form-checkbox__mark" aria-hidden="true"></span>
                 <span class="form-checkbox__label">
                   <a href="/privacy" target="_blank" class="form-privacy-link">プライバシーポリシー</a>に同意する <span class="form-required">必須</span>
                 </span>
               </label>
             </div>
+            <span class="form-error" id="agree-error" aria-live="polite"></span>
           </div>
 
         </div>
@@ -329,6 +340,37 @@ import PageHeader from '@/components/PageHeader.astro';
     color: var(--color-text-light);
   }
 
+  /* エラー状態 */
+  .form-input--error,
+  .form-select--error,
+  .form-textarea--error {
+    border-color: #C0392B;
+    box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.08);
+  }
+
+  .form-privacy--error {
+    border-color: #C0392B;
+  }
+
+  .form-error {
+    font-size: 0.75rem;
+    color: #C0392B;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 1.2em;
+  }
+
+  .form-error:not(:empty)::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='6' cy='6' r='5.5' stroke='%23C0392B'/%3E%3Cpath d='M6 3.5V6.5' stroke='%23C0392B' stroke-linecap='round'/%3E%3Ccircle cx='6' cy='8.5' r='0.5' fill='%23C0392B'/%3E%3C/svg%3E");
+    background-size: contain;
+    flex-shrink: 0;
+  }
+
   /* セレクトボックス */
   .form-select-wrap {
     position: relative;
@@ -361,6 +403,7 @@ import PageHeader from '@/components/PageHeader.astro';
     background: var(--color-bg);
     border: 1px solid var(--color-border);
     padding: var(--space-sm) var(--space-md);
+    transition: border-color var(--transition);
   }
 
   .form-privacy__text {
@@ -482,3 +525,89 @@ import PageHeader from '@/components/PageHeader.astro';
     }
   }
 </style>
+
+<script>
+  const form = document.querySelector('.contact-form') as HTMLFormElement;
+
+  // ── バリデーションルール ─────────────────────────────
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PHONE_RE = /^[\d\-+() ]{10,15}$/;
+
+  function validateField(id: string): boolean {
+    const el = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+    const errorEl = document.getElementById(`${id}-error`) as HTMLElement;
+    if (!el || !errorEl) return true;
+
+    let message = '';
+
+    if (id === 'name') {
+      if (!el.value.trim()) message = 'お名前を入力してください。';
+    } else if (id === 'email') {
+      if (!el.value.trim()) {
+        message = 'メールアドレスを入力してください。';
+      } else if (!EMAIL_RE.test(el.value.trim())) {
+        message = '正しいメールアドレス形式で入力してください。';
+      }
+    } else if (id === 'phone') {
+      if (el.value.trim() && !PHONE_RE.test(el.value.trim())) {
+        message = '正しい電話番号を入力してください（例：090-0000-0000）。';
+      }
+    } else if (id === 'inquiry-type') {
+      if (!el.value) message = 'お問い合わせ種別を選択してください。';
+    } else if (id === 'message') {
+      if (!el.value.trim()) message = 'お問い合わせ内容を入力してください。';
+    } else if (id === 'agree') {
+      const checkbox = el as HTMLInputElement;
+      if (!checkbox.checked) message = 'プライバシーポリシーへの同意が必要です。';
+    }
+
+    errorEl.textContent = message;
+
+    // 入力要素にエラークラスを付け外し
+    if (id === 'agree') {
+      const privacyBox = document.getElementById('privacy-box');
+      privacyBox?.classList.toggle('form-privacy--error', !!message);
+    } else if (el.tagName === 'SELECT') {
+      el.classList.toggle('form-select--error', !!message);
+    } else if (el.tagName === 'TEXTAREA') {
+      el.classList.toggle('form-textarea--error', !!message);
+    } else {
+      el.classList.toggle('form-input--error', !!message);
+    }
+
+    return !message;
+  }
+
+  function validateAll(): boolean {
+    const fields = ['name', 'email', 'phone', 'inquiry-type', 'message', 'agree'];
+    const results = fields.map(validateField);
+    return results.every(Boolean);
+  }
+
+  // ── blur（フォーカスアウト）時にリアルタイム検証 ───────
+  ['name', 'email', 'phone', 'inquiry-type', 'message'].forEach((id) => {
+    const el = document.getElementById(id);
+    el?.addEventListener('blur', () => validateField(id));
+    el?.addEventListener('input', () => {
+      // エラー表示中のみリアルタイムで再検証（打ち消し）
+      const errorEl = document.getElementById(`${id}-error`);
+      if (errorEl?.textContent) validateField(id);
+    });
+  });
+
+  // チェックボックスは change で即検証
+  document.getElementById('agree')?.addEventListener('change', () => validateField('agree'));
+
+  // ── 送信時バリデーション ────────────────────────────
+  form?.addEventListener('submit', (e) => {
+    const valid = validateAll();
+    if (!valid) {
+      e.preventDefault();
+      // 最初のエラー要素までスクロール
+      const firstError = form.querySelector('.form-error:not(:empty)') as HTMLElement;
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  });
+</script>
