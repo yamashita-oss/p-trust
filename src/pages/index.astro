@@ -55,7 +55,25 @@ try {
 }
 ---
 
-<BaseLayout>
+<BaseLayout
+  title="P-TRUST（ピートラスト）｜世田谷の不動産売買・仲介｜株式会社ピートラスト"
+  description="P-TRUST（ピートラスト）は東京・世田谷を中心に不動産売買・仲介を専門とする株式会社ピートラストの公式サイトです。地域密着15年以上の実績で、物件購入・売却・資産運用をサポートします。"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'P-TRUST（ピートラスト）',
+    alternateName: ['P-TRUST', 'ピートラスト', 'p-trust'],
+    url: 'https://ptrust-web.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://ptrust-web.com/properties?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  }}
+>
   <Hero />
   <TrustBar />
   <ServicesSection />

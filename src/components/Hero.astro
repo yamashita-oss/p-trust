@@ -10,7 +10,7 @@
       不動産の夢を叶える。
     </h1>
     <p class="hero__desc fade-in fade-in-delay-2">
-      株式会社ピートラストは、世田谷を中心とした東京の不動産売買・仲介を専門とする会社です。
+      <strong>株式会社ピートラスト（P-TRUST）</strong>は、世田谷を中心とした東京の不動産売買・仲介を専門とする会社です。
       お客様の大切な資産と暮らしを、経験豊富なスタッフが誠実にサポートします。
     </p>
     <div class="hero__actions fade-in fade-in-delay-3">
@@ -26,6 +26,8 @@
       class="hero__img"
       width="900"
       height="700"
+      fetchpriority="high"
+      decoding="sync"
     />
   </div>
 </section>
@@ -87,6 +89,11 @@
     line-height: 1.9;
     margin-bottom: var(--space-lg);
     max-width: 480px;
+  }
+
+  .hero__desc strong {
+    font-weight: 500;
+    color: var(--color-text);
   }
 
   .hero__actions {

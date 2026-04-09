@@ -20,7 +20,7 @@
   --font-serif-ja: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
   --font-sans-ja:  'Noto Sans JP', 'Hiragino Sans', sans-serif;
   --font-serif-en: 'Playfair Display', Georgia, serif;
-  --font-sans-en:  'Inter', system-ui, sans-serif;
+  --font-sans-en:  system-ui, -apple-system, sans-serif;
 
   /* スペーシング */
   --space-xs:  0.5rem;
@@ -201,3 +201,18 @@ a {
 .fade-in-delay-1 { animation-delay: 0.1s; }
 .fade-in-delay-2 { animation-delay: 0.2s; }
 .fade-in-delay-3 { animation-delay: 0.3s; }
+
+/* モーション軽減設定に配慮 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

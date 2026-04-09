@@ -7,15 +7,61 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  /** ページ固有の JSON-LD（省略時は会社スキーマのみ出力） */
+  jsonLd?: Record<string, unknown>;
+  /** トップページ以外の内部ページは noindex にしたい場合 */
+  noindex?: boolean;
 }
 
 const {
-  title = 'P-TRUST | 株式会社ピートラスト',
-  description = '株式会社ピートラストは、東京・世田谷を中心とした不動産売買・仲介のプロフェッショナルです。信頼と誠実をモットーに、お客様の大切な資産をサポートします。',
+  title = 'P-TRUST（ピートラスト）| 株式会社ピートラスト｜世田谷の不動産売買・仲介',
+  description = '株式会社ピートラスト（P-TRUST / ピートラスト）は、東京・世田谷を中心とした不動産売買・仲介のプロフェッショナルです。信頼と誠実をモットーに、お客様の大切な資産をサポートします。',
   ogImage = '/og-image.jpg',
+  jsonLd,
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site).toString();
+
+// 全ページ共通：会社の LocalBusiness 構造化データ
+const companySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: '株式会社ピートラスト',
+  alternateName: ['P-TRUST', 'ピートラスト', 'p-trust', 'Ptrust'],
+  url: 'https://ptrust-web.com',
+  logo: 'https://ptrust-web.com/images/logo.svg',
+  image: 'https://ptrust-web.com/og-image.jpg',
+  description:
+    '東京・世田谷を中心とした不動産売買・仲介のプロフェッショナル。信頼と誠実をモットーに、お客様の資産と暮らしをサポートします。',
+  telephone: '03-6805-7608',
+  email: 'yamashita@ptrust-web.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '鎌田3-18-15 ロフティー玉川',
+    addressLocality: '世田谷区',
+    addressRegion: '東京都',
+    postalCode: '157-0077',
+    addressCountry: 'JP',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 35.6197,
+    longitude: 139.6205,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '10:00',
+    closes: '18:00',
+  },
+  areaServed: {
+    '@type': 'City',
+    name: '世田谷区',
+  },
+  sameAs: ['https://ptrust-web.com'],
+};
 ---
 
 <!doctype html>
@@ -24,15 +70,30 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="P-TRUST,ピートラスト,p-trust,株式会社ピートラスト,世田谷 不動産,世田谷区 不動産売買,不動産仲介 世田谷,不動産売却 東京"
+    />
+    {noindex
+      ? <meta name="robots" content="noindex,follow" />
+      : <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+    }
     <link rel="canonical" href={canonicalURL} />
 
     <!-- OGP -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="P-TRUST（ピートラスト）" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -41,11 +102,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:wght@400;600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <title>{title}</title>
+
+    <!-- LCP 画像の事前読み込み（Hero） -->
+    <link rel="preload" as="image" href="/images/hero.jpg" fetchpriority="high" />
+
+    <!-- 構造化データ：会社情報（全ページ共通） -->
+    <script type="application/ld+json" set:html={JSON.stringify(companySchema)} />
+
+    <!-- 構造化データ：ページ固有（任意） -->
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <Header />
