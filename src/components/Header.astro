@@ -12,8 +12,7 @@ const pathname = Astro.url.pathname;
 <header class="header" id="header">
   <div class="header__inner">
     <a href="/" class="header__logo" aria-label="P-TRUST トップページ">
-      <img src="/logo-mark.jpg" alt="" class="header__logo-mark" width="40" height="40" aria-hidden="true" />
-      <span class="header__logo-name">P-TRUST</span>
+      <img src="/images/logo.svg" alt="P-TRUST" class="header__logo-img" width="80" height="67" />
     </a>
 
     <nav class="nav" aria-label="グローバルナビゲーション">
@@ -73,18 +72,10 @@ const pathname = Astro.url.pathname;
     padding: 0 var(--space-md);
   }
 
-  .header__logo-mark {
-    width: 40px;
-    height: 40px;
+  .header__logo-img {
+    height: 48px;
+    width: auto;
     object-fit: contain;
-  }
-
-  .header__logo-name {
-    font-family: var(--font-sans-en);
-    font-size: 1.05rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    color: var(--color-navy);
   }
 
   .nav {
