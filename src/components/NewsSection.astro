@@ -1,55 +1,54 @@
 ---
-const newsItems = [
-  {
-    date: '2026年4月1日',
-    category: 'お知らせ',
-    title: 'ウェブサイトをリニューアルしました',
-  },
-  {
-    date: '2026年3月15日',
-    category: '物件情報',
-    title: '世田谷区用賀エリアの新着物件を掲載しました',
-  },
-  {
-    date: '2026年3月1日',
-    category: 'お知らせ',
-    title: '春の無料相談会を開催いたします（3月中旬〜4月）',
-  },
-  {
-    date: '2026年2月10日',
-    category: 'コラム',
-    title: '不動産売却のベストタイミングについて解説します',
-  },
-];
+import { getNewsArticles } from '@/lib/microcms';
 
 const categoryColor: Record<string, string> = {
-  'お知らせ': 'tag--navy',
-  '物件情報': 'tag--gold',
-  'コラム':   'tag--gray',
+  'お知らせ':     'tag--navy',
+  '物件情報':     'tag--gold',
+  'コラム':       'tag--gray',
+  'プレスリリース': 'tag--gray',
 };
+
+function formatDate(iso: string): string {
+  const d = new Date(iso);
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+}
+
+let newsItems: { date: string; category: string; title: string }[] = [];
+try {
+  const res = await getNewsArticles({ limit: 5 });
+  newsItems = res.contents.map((item) => ({
+    date: formatDate(item.publishedAt),
+    category: item.category,
+    title: item.title,
+  }));
+} catch {
+  // microCMS 未設定またはエラー時は非表示
+}
 ---
 
-<section class="section section--bg" id="news">
-  <div class="container container--narrow">
-    <div class="news__head">
-      <span class="section-label">News</span>
-      <h2 class="section-title">お知らせ</h2>
-      <div class="divider divider--center"></div>
-    </div>
+{newsItems.length > 0 && (
+  <section class="section section--bg" id="news">
+    <div class="container container--narrow">
+      <div class="news__head">
+        <span class="section-label">News</span>
+        <h2 class="section-title">お知らせ</h2>
+        <div class="divider divider--center"></div>
+      </div>
 
-    <ul class="news-list">
-      {newsItems.map((item) => (
-        <li class="news-item">
-          <time class="news-item__date" datetime={item.date}>{item.date}</time>
-          <span class={`news-item__tag ${categoryColor[item.category] ?? 'tag--gray'}`}>
-            {item.category}
-          </span>
-          <span class="news-item__title">{item.title}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
+      <ul class="news-list">
+        {newsItems.map((item) => (
+          <li class="news-item">
+            <time class="news-item__date">{item.date}</time>
+            <span class={`news-item__tag ${categoryColor[item.category] ?? 'tag--gray'}`}>
+              {item.category}
+            </span>
+            <span class="news-item__title">{item.title}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
 
 <style>
   .news__head {
