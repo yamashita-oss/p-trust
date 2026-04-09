@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P-TRUST | 株式会社ピートラスト — デザインプロトタイプ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       デザイントークン (Design Tokens)
+       ============================================ */
+    :root {
+      /* カラーパレット */
+      --color-navy:       #1C2B4A;   /* ロゴのネイビー — メインブランドカラー */
+      --color-navy-light: #2E4070;   /* ホバー・グラデーション用 */
+      --color-navy-pale:  #EEF1F7;   /* 背景薄色 */
+      --color-gold:       #B8965A;   /* アクセント — 高級感・信頼 */
+      --color-gold-light: #D4AF7A;   /* ゴールド薄め */
+      --color-white:      #FFFFFF;
+      --color-bg:         #F8F7F4;   /* オフホワイト — 温もり */
+      --color-bg-warm:    #F3F0EA;   /* セクション区切り */
+      --color-text:       #1C2B4A;   /* 本文 */
+      --color-text-mid:   #4A5568;   /* サブテキスト */
+      --color-text-light: #8C96A8;   /* キャプション */
+      --color-border:     #DDD9D0;   /* 罫線 */
+      --color-border-dark:#B8B0A4;
+
+      /* タイポグラフィ */
+      --font-serif-ja:  'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      --font-sans-ja:   'Noto Sans JP', 'Hiragino Sans', sans-serif;
+      --font-serif-en:  'Playfair Display', Georgia, serif;
+      --font-sans-en:   'Inter', system-ui, sans-serif;
+
+      /* スペーシング */
+      --space-xs:  0.5rem;
+      --space-sm:  1rem;
+      --space-md:  2rem;
+      --space-lg:  4rem;
+      --space-xl:  6rem;
+      --space-2xl: 10rem;
+
+      /* ボーダー半径 */
+      --radius-sm: 2px;
+      --radius-md: 4px;
+
+      /* シャドウ */
+      --shadow-card: 0 2px 20px rgba(28, 43, 74, 0.08);
+      --shadow-hover: 0 8px 40px rgba(28, 43, 74, 0.14);
+
+      /* トランジション */
+      --transition: 0.3s ease;
+    }
+
+    /* ============================================
+       リセット & ベース
+       ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans-ja);
+      color: var(--color-text);
+      background: var(--color-white);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ============================================
+       ユーティリティ
+       ============================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+    .container--narrow { max-width: 800px; }
+    .section { padding: var(--space-xl) 0; }
+    .section--bg { background: var(--color-bg); }
+    .section--warm { background: var(--color-bg-warm); }
+    .section--navy {
+      background: var(--color-navy);
+      color: var(--color-white);
+    }
+
+    /* 見出しパターン */
+    .section-label {
+      font-family: var(--font-sans-en);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+    .section-title {
+      font-family: var(--font-serif-ja);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.05em;
+    }
+    .section-title--en {
+      font-family: var(--font-serif-en);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--color-gold);
+      margin: var(--space-sm) 0 var(--space-md);
+    }
+    .divider--center { margin-left: auto; margin-right: auto; }
+
+    /* ============================================
+       ヘッダー / ナビゲーション
+       ============================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      transition: var(--transition);
+    }
+    .header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    /* ロゴ SVG プレースホルダー */
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+    }
+    .logo-name {
+      font-family: var(--font-sans-en);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--color-navy);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .nav__link {
+      font-family: var(--font-sans-ja);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--color-text-mid);
+      transition: color var(--transition);
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--color-gold);
+      transition: width var(--transition);
+    }
+    .nav__link:hover { color: var(--color-navy); }
+    .nav__link:hover::after { width: 100%; }
+    .nav__cta {
+      font-family: var(--font-sans-ja);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      padding: 0.6rem 1.4rem;
+      background: var(--color-navy);
+      color: var(--color-white);
+      border: 1px solid var(--color-navy);
+      transition: var(--transition);
+    }
+    .nav__cta:hover {
+      background: transparent;
+      color: var(--color-navy);
+    }
+
+    /* ============================================
+       ヒーローセクション
+       ============================================ */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xl) var(--space-lg) var(--space-xl) var(--space-md);
+      max-width: 680px;
+      margin-left: auto;
+    }
+    .hero__eyebrow {
+      font-family: var(--font-sans-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      margin-bottom: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .hero__eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--color-gold);
+    }
+    .hero__title {
+      font-family: var(--font-serif-ja);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--space-md);
+    }
+    .hero__title strong {
+      font-weight: 600;
+      color: var(--color-navy);
+    }
+    .hero__desc {
+      font-size: 0.9rem;
+      color: var(--color-text-mid);
+      line-height: 1.9;
+      margin-bottom: var(--space-lg);
+      max-width: 480px;
+    }
+    .hero__actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 0.9rem 2rem;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+    .btn--primary {
+      background: var(--color-navy);
+      color: var(--color-white);
+      border: 1px solid var(--color-navy);
+    }
+    .btn--primary:hover {
+      background: var(--color-navy-light);
+      border-color: var(--color-navy-light);
+    }
+    .btn--outline {
+      background: transparent;
+      color: var(--color-navy);
+      border: 1px solid var(--color-navy);
+    }
+    .btn--outline:hover {
+      background: var(--color-navy);
+      color: var(--color-white);
+    }
+    .btn--gold {
+      background: var(--color-gold);
+      color: var(--color-white);
+      border: 1px solid var(--color-gold);
+    }
+    .btn--gold:hover {
+      background: var(--color-gold-light);
+      border-color: var(--color-gold-light);
+    }
+    .hero__image {
+      position: relative;
+      overflow: hidden;
+      background: var(--color-navy-pale);
+    }
+    .hero__image-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 600px;
+      background: linear-gradient(135deg, var(--color-navy-pale) 0%, #D4DCE8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .hero__image-placeholder span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      letter-spacing: 0.1em;
+    }
+
+    /* ストライプパターン(ロゴからの着想) */
+    .stripe-accent {
+      position: absolute;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      width: 80px;
+      height: 80px;
+      opacity: 0.15;
+    }
+    .stripe-accent line {
+      stroke: var(--color-navy);
+      stroke-width: 1.5;
+    }
+
+    /* ============================================
+       実績バー (トラスト指標)
+       ============================================ */
+    .trust-bar {
+      background: var(--color-navy);
+      color: var(--color-white);
+      padding: var(--space-md) 0;
+    }
+    .trust-bar__inner {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+    }
+    .trust-stat {
+      text-align: center;
+    }
+    .trust-stat__number {
+      font-family: var(--font-serif-en);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--color-gold-light);
+      line-height: 1;
+    }
+    .trust-stat__unit {
+      font-size: 0.85rem;
+      margin-left: 2px;
+    }
+    .trust-stat__label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.4rem;
+    }
+    .trust-bar__sep {
+      width: 1px;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+    }
+
+    /* ============================================
+       サービスセクション
+       ============================================ */
+    .services {
+      padding: var(--space-xl) 0;
+      background: var(--color-bg);
+    }
+    .services__header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--color-white);
+      padding: var(--space-lg) var(--space-md);
+      border: 1px solid var(--color-border);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--color-gold);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform var(--transition);
+    }
+    .service-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+    .service-card:hover::before {
+      transform: scaleY(1);
+    }
+    .service-card__icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: var(--space-md);
+    }
+    .service-card__title {
+      font-family: var(--font-serif-ja);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+      letter-spacing: 0.05em;
+    }
+    .service-card__desc {
+      font-size: 0.83rem;
+      color: var(--color-text-mid);
+      line-height: 1.85;
+    }
+    .service-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: var(--space-md);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--color-gold);
+      transition: gap var(--transition);
+    }
+    .service-card__link:hover { gap: 0.7rem; }
+
+    /* ============================================
+       物件紹介セクション
+       ============================================ */
+    .properties { padding: var(--space-xl) 0; }
+    .properties__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: var(--space-lg);
+    }
+    .properties__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .property-card {
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .property-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+    .property-card__image {
+      height: 200px;
+      background: linear-gradient(135deg, var(--color-navy-pale) 0%, #CDD5E0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-light);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    .property-card__tag {
+      position: absolute;
+      top: var(--space-sm);
+      left: var(--space-sm);
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.7rem;
+      background: var(--color-navy);
+      color: var(--color-white);
+    }
+    .tag--gold { background: var(--color-gold); }
+    .property-card__body {
+      padding: var(--space-md);
+    }
+    .property-card__area {
+      font-size: 0.7rem;
+      color: var(--color-text-light);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.3rem;
+    }
+    .property-card__name {
+      font-family: var(--font-serif-ja);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+    .property-card__price {
+      font-family: var(--font-serif-en);
+      font-size: 1.5rem;
+      color: var(--color-navy);
+      font-weight: 400;
+    }
+    .property-card__price span {
+      font-family: var(--font-sans-ja);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--color-text-mid);
+    }
+    .property-card__specs {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border);
+      font-size: 0.75rem;
+      color: var(--color-text-mid);
+    }
+
+    /* ============================================
+       会社の強み (Why P-TRUST)
+       ============================================ */
+    .why {
+      background: var(--color-navy);
+      color: var(--color-white);
+      padding: var(--space-xl) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .why::before {
+      content: 'P-TRUST';
+      position: absolute;
+      font-family: var(--font-serif-en);
+      font-size: 20rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.03);
+      right: -4rem;
+      bottom: -4rem;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .why__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+    .why__content .section-label { color: var(--color-gold-light); }
+    .why__content .section-title { color: var(--color-white); }
+    .why__content .divider { background: var(--color-gold); }
+    .why__lead {
+      font-size: 0.9rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.75);
+    }
+    .why__points {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+    .why__point {
+      display: flex;
+      gap: var(--space-sm);
+      align-items: flex-start;
+    }
+    .why__point-num {
+      font-family: var(--font-serif-en);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--color-gold);
+      line-height: 1;
+      min-width: 2.5rem;
+    }
+    .why__point-title {
+      font-family: var(--font-serif-ja);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .why__point-desc {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+    .why__image {
+      aspect-ratio: 4/5;
+      background: linear-gradient(160deg, #2E4070 0%, #1C2B4A 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      position: relative;
+    }
+    .why__image-stripe {
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 12px,
+        rgba(255,255,255,0.8) 12px,
+        rgba(255,255,255,0.8) 13px
+      );
+    }
+
+    /* ============================================
+       お客様の声
+       ============================================ */
+    .testimonials {
+      padding: var(--space-xl) 0;
+      background: var(--color-bg-warm);
+    }
+    .testimonials__header { text-align: center; margin-bottom: var(--space-lg); }
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .testimonial-card {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border: 1px solid var(--color-border);
+      position: relative;
+    }
+    .testimonial-card__quote {
+      font-family: var(--font-serif-en);
+      font-size: 3rem;
+      color: var(--color-gold);
+      line-height: 0.7;
+      opacity: 0.4;
+      margin-bottom: var(--space-sm);
+    }
+    .testimonial-card__text {
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: var(--color-text-mid);
+      margin-bottom: var(--space-md);
+    }
+    .testimonial-card__author {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text);
+      letter-spacing: 0.05em;
+    }
+    .testimonial-card__meta {
+      font-size: 0.7rem;
+      color: var(--color-text-light);
+      margin-top: 0.2rem;
+    }
+
+    /* ============================================
+       お問い合わせ CTA
+       ============================================ */
+    .cta-section {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background: var(--color-white);
+    }
+    .cta-section .section-title { margin-bottom: var(--space-sm); }
+    .cta-section p {
+      font-size: 0.875rem;
+      color: var(--color-text-mid);
+      margin-bottom: var(--space-lg);
+    }
+    .cta-section .btn { font-size: 0.875rem; padding: 1rem 2.5rem; }
+
+    /* お問い合わせフォームエリア */
+    .contact-cards {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+    .contact-card {
+      flex: 1;
+      max-width: 300px;
+      padding: var(--space-md);
+      border: 1px solid var(--color-border);
+      text-align: center;
+    }
+    .contact-card__icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto var(--space-sm);
+    }
+    .contact-card__title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+    .contact-card__detail {
+      font-family: var(--font-sans-en);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--color-navy);
+    }
+    .contact-card__note {
+      font-size: 0.7rem;
+      color: var(--color-text-light);
+      margin-top: 0.3rem;
+    }
+
+    /* ============================================
+       フッター
+       ============================================ */
+    .footer {
+      background: #111827;
+      color: var(--color-white);
+      padding: var(--space-xl) 0 var(--space-md);
+    }
+    .footer__inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .footer__brand .logo-name { color: var(--color-white); }
+    .footer__tagline {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.8;
+      margin-top: var(--space-sm);
+    }
+    .footer__address {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 2;
+      margin-top: var(--space-sm);
+    }
+    .footer__nav-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-gold-light);
+      margin-bottom: var(--space-sm);
+    }
+    .footer__nav-list { list-style: none; }
+    .footer__nav-list li {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      padding: 0.3rem 0;
+      transition: color var(--transition);
+      cursor: pointer;
+    }
+    .footer__nav-list li:hover { color: var(--color-white); }
+    .footer__bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: var(--space-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ============================================
+       デザイントークン表示 (開発用)
+       ============================================ */
+    .design-tokens {
+      padding: var(--space-xl) 0;
+      background: #0F0F0F;
+      color: white;
+    }
+    .tokens-title {
+      font-family: var(--font-sans-en);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: var(--space-lg);
+    }
+    .tokens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--space-sm);
+    }
+    .token-swatch {
+      aspect-ratio: 1;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0.5rem;
+    }
+    .token-name {
+      font-family: monospace;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.6);
+      word-break: break-all;
+    }
+    .token-value {
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ============================================
+       プロトタイプ注釈
+       ============================================ */
+    .prototype-note {
+      background: #FEF3CD;
+      border: 1px solid #F0C040;
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.8rem;
+      color: #5C4A00;
+      text-align: center;
+    }
+
+    /* ============================================
+       スクロールアニメーション (シンプル)
+       ============================================ */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.7s ease both; }
+    .fade-in-delay-1 { animation-delay: 0.1s; }
+    .fade-in-delay-2 { animation-delay: 0.2s; }
+    .fade-in-delay-3 { animation-delay: 0.3s; }
+
+    /* ============================================
+       レスポンシブ
+       ============================================ */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero__image { display: none; }
+      .hero__content { max-width: 100%; padding: var(--space-xl) var(--space-md); }
+      .why__inner { grid-template-columns: 1fr; }
+      .why__image { display: none; }
+      .footer__inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .services__grid,
+      .properties__grid,
+      .testimonials__grid { grid-template-columns: 1fr; }
+      .trust-bar__inner { gap: var(--space-md); }
+      .trust-bar__sep { display: none; }
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- プロトタイプ注釈 -->
+<div class="prototype-note">
+  🎨 デザインプロトタイプ — Astro + microCMS + Netlify 実装前のビジュアルレファレンス
+</div>
+
+<!-- ============================================
+     ヘッダー
+     ============================================ -->
+<header class="header">
+  <div class="header__inner">
+    <a href="#" class="header__logo">
+      <img src="public/logo-mark.jpg" alt="" style="width:40px;height:40px;object-fit:contain;" aria-hidden="true" />
+      <span class="logo-name">P-TRUST</span>
+    </a>
+
+    <nav class="nav">
+      <a href="#services" class="nav__link">サービス</a>
+      <a href="#properties" class="nav__link">物件情報</a>
+      <a href="#about" class="nav__link">会社案内</a>
+      <a href="#news" class="nav__link">お知らせ</a>
+      <a href="#contact" class="nav__cta">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================
+     ヒーロー
+     ============================================ -->
+<section class="hero">
+  <div class="hero__content">
+    <div class="hero__eyebrow fade-in">Real Estate Partner</div>
+    <h1 class="hero__title fade-in fade-in-delay-1">
+      <strong>信頼</strong>と<strong>誠実</strong>で、<br>
+      あなたの<br>
+      不動産の夢を叶える。
+    </h1>
+    <p class="hero__desc fade-in fade-in-delay-2">
+      株式会社ピートラストは、世田谷を中心とした東京の不動産売買・仲介を専門とする会社です。
+      お客様の大切な資産と暮らしを、経験豊富なスタッフが誠実にサポートします。
+    </p>
+    <div class="hero__actions fade-in fade-in-delay-3">
+      <a href="#properties" class="btn btn--primary">物件を探す</a>
+      <a href="#contact" class="btn btn--outline">無料相談</a>
+    </div>
+  </div>
+  <div class="hero__image">
+    <div class="hero__image-placeholder">
+      <!-- 実際は高品質な建物・インテリア写真 -->
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" opacity="0.3">
+        <rect x="8" y="24" width="48" height="32" stroke="#1C2B4A" stroke-width="1.5"/>
+        <path d="M4 28 L32 8 L60 28" stroke="#1C2B4A" stroke-width="1.5"/>
+        <rect x="26" y="40" width="12" height="16" stroke="#1C2B4A" stroke-width="1.2"/>
+      </svg>
+      <span>メインビジュアル写真</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     信頼指標バー
+     ============================================ -->
+<div class="trust-bar">
+  <div class="trust-bar__inner">
+    <div class="trust-stat">
+      <div class="trust-stat__number">500<span class="trust-stat__unit">+</span></div>
+      <div class="trust-stat__label">累計取引件数</div>
+    </div>
+    <div class="trust-bar__sep"></div>
+    <div class="trust-stat">
+      <div class="trust-stat__number">15<span class="trust-stat__unit">年</span></div>
+      <div class="trust-stat__label">業界経験</div>
+    </div>
+    <div class="trust-bar__sep"></div>
+    <div class="trust-stat">
+      <div class="trust-stat__number">98<span class="trust-stat__unit">%</span></div>
+      <div class="trust-stat__label">顧客満足度</div>
+    </div>
+    <div class="trust-bar__sep"></div>
+    <div class="trust-stat">
+      <div class="trust-stat__number">24<span class="trust-stat__unit">h</span></div>
+      <div class="trust-stat__label">お問い合わせ対応</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     サービスセクション
+     ============================================ -->
+<section class="services section" id="services">
+  <div class="container">
+    <div class="services__header">
+      <span class="section-label">Services</span>
+      <h2 class="section-title">サービス案内</h2>
+      <div class="divider divider--center"></div>
+    </div>
+
+    <div class="services__grid">
+      <!-- 売買仲介 -->
+      <div class="service-card">
+        <svg class="service-card__icon" viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="16" width="36" height="26" stroke="#1C2B4A" stroke-width="1.5" rx="1"/>
+          <path d="M3 20 L24 6 L45 20" stroke="#1C2B4A" stroke-width="1.5"/>
+          <rect x="18" y="28" width="12" height="14" stroke="#B8965A" stroke-width="1.2"/>
+          <line x1="14" y1="22" x2="14" y2="28" stroke="#B8965A" stroke-width="1.2"/>
+          <line x1="34" y1="22" x2="34" y2="28" stroke="#B8965A" stroke-width="1.2"/>
+        </svg>
+        <h3 class="service-card__title">売買仲介</h3>
+        <p class="service-card__desc">
+          マンション・一戸建て・土地の売買をトータルサポート。
+          適正価格の査定から契約・引渡しまで、丁寧にご案内します。
+        </p>
+        <a href="#" class="service-card__link">詳しく見る →</a>
+      </div>
+
+      <!-- 資産運用コンサル -->
+      <div class="service-card">
+        <svg class="service-card__icon" viewBox="0 0 48 48" fill="none">
+          <polyline points="6,36 16,22 24,28 36,14 42,20" stroke="#1C2B4A" stroke-width="1.5" fill="none"/>
+          <circle cx="36" cy="14" r="3" fill="#B8965A"/>
+          <line x1="6" y1="36" x2="42" y2="36" stroke="#1C2B4A" stroke-width="1" stroke-dasharray="3 2"/>
+          <line x1="6" y1="10" x2="6" y2="38" stroke="#1C2B4A" stroke-width="1" stroke-dasharray="3 2"/>
+        </svg>
+        <h3 class="service-card__title">資産運用コンサルティング</h3>
+        <p class="service-card__desc">
+          不動産を通じた資産形成・収益化をご提案。
+          投資用物件の選定から収支計画まで専門家が対応します。
+        </p>
+        <a href="#" class="service-card__link">詳しく見る →</a>
+      </div>
+
+      <!-- 賃貸管理 -->
+      <div class="service-card">
+        <svg class="service-card__icon" viewBox="0 0 48 48" fill="none">
+          <rect x="8" y="8" width="32" height="32" rx="2" stroke="#1C2B4A" stroke-width="1.5"/>
+          <line x1="8" y1="18" x2="40" y2="18" stroke="#1C2B4A" stroke-width="1"/>
+          <line x1="22" y1="8" x2="22" y2="40" stroke="#1C2B4A" stroke-width="1"/>
+          <path d="M14 26 L18 30 L26 22" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h3 class="service-card__title">賃貸・管理</h3>
+        <p class="service-card__desc">
+          オーナー様の物件を入居者募集から月次管理まで一括サポート。
+          長期安定運用をトータルでお手伝いします。
+        </p>
+        <a href="#" class="service-card__link">詳しく見る →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     物件情報
+     ============================================ -->
+<section class="properties section" id="properties">
+  <div class="container">
+    <div class="properties__header">
+      <div>
+        <span class="section-label">Properties</span>
+        <h2 class="section-title">おすすめ物件</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#" class="btn btn--outline">物件一覧を見る</a>
+    </div>
+
+    <div class="properties__grid">
+      <!-- 物件カード 1 -->
+      <div class="property-card" style="position:relative">
+        <div class="property-card__image">物件写真</div>
+        <span class="property-card__tag">
+          <span class="tag">売買</span>
+        </span>
+        <div class="property-card__body">
+          <div class="property-card__area">東京都世田谷区</div>
+          <div class="property-card__name">グランドステージ用賀</div>
+          <div class="property-card__price">8,500<span>万円</span></div>
+          <div class="property-card__specs">
+            <span>3LDK</span>
+            <span>|</span>
+            <span>78.5m²</span>
+            <span>|</span>
+            <span>築5年</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 物件カード 2 -->
+      <div class="property-card" style="position:relative">
+        <div class="property-card__image" style="background: linear-gradient(135deg, #CDD5E0 0%, #B8C4D4 100%)">物件写真</div>
+        <span class="property-card__tag">
+          <span class="tag tag--gold">新着</span>
+        </span>
+        <div class="property-card__body">
+          <div class="property-card__area">東京都世田谷区 二子玉川</div>
+          <div class="property-card__name">ライオンズ二子玉川</div>
+          <div class="property-card__price">6,200<span>万円</span></div>
+          <div class="property-card__specs">
+            <span>2LDK</span>
+            <span>|</span>
+            <span>62.3m²</span>
+            <span>|</span>
+            <span>築10年</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 物件カード 3 -->
+      <div class="property-card" style="position:relative">
+        <div class="property-card__image" style="background: linear-gradient(135deg, #D4DCE8 0%, #EEF1F7 100%)">物件写真</div>
+        <span class="property-card__tag">
+          <span class="tag">戸建て</span>
+        </span>
+        <div class="property-card__body">
+          <div class="property-card__area">東京都世田谷区 鎌田</div>
+          <div class="property-card__name">鎌田4丁目 一戸建て</div>
+          <div class="property-card__price">1.2<span>億円</span></div>
+          <div class="property-card__specs">
+            <span>4LDK</span>
+            <span>|</span>
+            <span>120.0m²</span>
+            <span>|</span>
+            <span>新築</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     会社の強み
+     ============================================ -->
+<section class="why" id="about">
+  <div class="container">
+    <div class="why__inner">
+      <div class="why__content">
+        <span class="section-label">Why P-TRUST</span>
+        <h2 class="section-title">ピートラストが<br>選ばれる理由</h2>
+        <div class="divider"></div>
+        <p class="why__lead">
+          「P」はPeople（人）・Professional（専門）・Partnership（絆）を意味し、
+          「TRUST」はお客様からの信頼を第一に掲げる私たちの姿勢を表しています。
+          世田谷エリアに根ざした豊富なネットワークと、誠実なコミュニケーションで
+          お客様の理想の不動産取引を実現します。
+        </p>
+        <div class="why__points">
+          <div class="why__point">
+            <span class="why__point-num">01</span>
+            <div>
+              <div class="why__point-title">地域密着の専門性</div>
+              <p class="why__point-desc">世田谷区を中心に15年以上の実績。地域の相場・条件を知り尽くしたアドバイスを提供します。</p>
+            </div>
+          </div>
+          <div class="why__point">
+            <span class="why__point-num">02</span>
+            <div>
+              <div class="why__point-title">代表直接対応</div>
+              <p class="why__point-desc">代表取締役・山下康太が直接ご相談に応じます。窓口の手間なく、経験ある担当者と直接交渉できます。</p>
+            </div>
+          </div>
+          <div class="why__point">
+            <span class="why__point-num">03</span>
+            <div>
+              <div class="why__point-title">透明性のある取引</div>
+              <p class="why__point-desc">費用・手続き・リスクを隠さず説明。お客様が納得した上で意思決定できる環境を整えています。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why__image">
+        <div class="why__image-stripe"></div>
+        代表写真 or オフィス写真
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     お客様の声
+     ============================================ -->
+<section class="testimonials section">
+  <div class="container">
+    <div class="testimonials__header">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">お客様の声</h2>
+      <div class="divider divider--center"></div>
+    </div>
+
+    <div class="testimonials__grid">
+      <div class="testimonial-card">
+        <div class="testimonial-card__quote">"</div>
+        <p class="testimonial-card__text">
+          初めての不動産購入で不安でしたが、山下代表が細かい疑問にも丁寧に答えてくださり、
+          安心して進められました。希望通りの物件を見つけていただけて本当に感謝しています。
+        </p>
+        <div class="testimonial-card__author">T.M 様</div>
+        <div class="testimonial-card__meta">世田谷区 マンション購入</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__quote">"</div>
+        <p class="testimonial-card__text">
+          売却を急いでいたにもかかわらず、適正価格を見極めてしっかり交渉してくれました。
+          想定以上の金額で売却でき、プロに頼んで正解でした。
+        </p>
+        <div class="testimonial-card__author">K.S 様</div>
+        <div class="testimonial-card__meta">目黒区 一戸建て売却</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-card__quote">"</div>
+        <p class="testimonial-card__text">
+          投資用物件の相談から運用まで一貫してサポートいただいています。
+          正直なアドバイスで無理のない計画が立てられ、長期的にお付き合いしています。
+        </p>
+        <div class="testimonial-card__author">Y.F 様</div>
+        <div class="testimonial-card__meta">渋谷区 投資物件管理</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA / お問い合わせ
+     ============================================ -->
+<section class="cta-section section" id="contact" style="background: var(--color-bg);">
+  <div class="container container--narrow">
+    <span class="section-label" style="display:block;text-align:center">Contact</span>
+    <h2 class="section-title" style="text-align:center">まずはお気軽に<br>ご相談ください</h2>
+    <div class="divider divider--center"></div>
+    <p>不動産の購入・売却・運用など、どんなご相談もお受けしております。<br>お電話・メール・フォームからお気軽にご連絡ください。</p>
+
+    <div class="contact-cards">
+      <div class="contact-card">
+        <svg class="contact-card__icon" viewBox="0 0 40 40" fill="none">
+          <path d="M8 8 Q8 6 10 6 L16 6 L19 14 L15 17 Q18 23 23 28 L26 24 L34 27 L34 33 Q34 35 32 35 Q16 35 8 8Z" stroke="#1C2B4A" stroke-width="1.2" fill="none"/>
+        </svg>
+        <div class="contact-card__title">お電話でのご相談</div>
+        <div class="contact-card__detail">03-6805-7608</div>
+        <div class="contact-card__note">平日 10:00〜18:00</div>
+      </div>
+      <div class="contact-card">
+        <svg class="contact-card__icon" viewBox="0 0 40 40" fill="none">
+          <rect x="4" y="10" width="32" height="22" rx="2" stroke="#1C2B4A" stroke-width="1.2"/>
+          <polyline points="4,10 20,22 36,10" stroke="#B8965A" stroke-width="1.2" fill="none"/>
+        </svg>
+        <div class="contact-card__title">メールでのご相談</div>
+        <div class="contact-card__detail" style="font-size:0.85rem">yamashita@ptrust-web.com</div>
+        <div class="contact-card__note">24時間受付</div>
+      </div>
+      <div class="contact-card" style="background:var(--color-navy);border-color:var(--color-navy)">
+        <svg class="contact-card__icon" viewBox="0 0 40 40" fill="none">
+          <rect x="6" y="6" width="28" height="28" rx="2" stroke="white" stroke-width="1.2"/>
+          <line x1="12" y1="16" x2="28" y2="16" stroke="#B8965A" stroke-width="1.2"/>
+          <line x1="12" y1="21" x2="28" y2="21" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          <line x1="12" y1="26" x2="20" y2="26" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+        </svg>
+        <div class="contact-card__title" style="color:white">フォームから相談</div>
+        <a href="#" class="btn btn--gold" style="margin-top:0.5rem;font-size:0.75rem;padding:0.6rem 1.2rem">無料相談を申し込む</a>
+        <div class="contact-card__note" style="color:rgba(255,255,255,0.5)">通常1営業日以内に返信</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     フッター
+     ============================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:var(--space-sm)">
+          <img src="public/logo-mark.jpg" alt="" style="width:44px;height:44px;object-fit:contain;filter:invert(1);opacity:0.85;" aria-hidden="true" />
+          <span class="logo-name" style="color:white;font-size:1.05rem">P-TRUST</span>
+        </div>
+        <p class="footer__tagline">
+          信頼と誠実を軸に、<br>
+          お客様の大切な資産と暮らしを守る<br>
+          不動産のパートナーであり続けます。
+        </p>
+        <address class="footer__address" style="font-style:normal">
+          〒157-0077<br>
+          東京都世田谷区鎌田3-18-15 ロフティー玉川<br>
+          TEL: 03-6805-7608 / FAX: 03-6805-7609
+        </address>
+      </div>
+      <div>
+        <div class="footer__nav-title">サービス</div>
+        <ul class="footer__nav-list">
+          <li>売買仲介</li>
+          <li>資産運用コンサルティング</li>
+          <li>賃貸・管理</li>
+          <li>相続・贈与</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__nav-title">会社情報</div>
+        <ul class="footer__nav-list">
+          <li>会社概要</li>
+          <li>代表メッセージ</li>
+          <li>アクセス</li>
+          <li>採用情報</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__nav-title">お役立ち情報</div>
+        <ul class="footer__nav-list">
+          <li>不動産購入ガイド</li>
+          <li>売却の流れ</li>
+          <li>よくある質問</li>
+          <li>お知らせ</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2025 株式会社ピートラスト (P-TRUST). All rights reserved.</span>
+      <span>プライバシーポリシー｜特定商取引法</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================
+     デザイントークン表示 (開発用参照)
+     ============================================ -->
+<section class="design-tokens">
+  <div class="container">
+    <div class="tokens-title">— Design Tokens / Color Palette —</div>
+    <div class="tokens-grid">
+      <div class="token-swatch" style="background:#1C2B4A">
+        <div class="token-name">--color-navy</div>
+        <div class="token-value">#1C2B4A</div>
+      </div>
+      <div class="token-swatch" style="background:#2E4070">
+        <div class="token-name">--color-navy-light</div>
+        <div class="token-value">#2E4070</div>
+      </div>
+      <div class="token-swatch" style="background:#EEF1F7;border:1px solid #ccc">
+        <div class="token-name" style="color:#1C2B4A">--color-navy-pale</div>
+        <div class="token-value" style="color:#666">#EEF1F7</div>
+      </div>
+      <div class="token-swatch" style="background:#B8965A">
+        <div class="token-name">--color-gold</div>
+        <div class="token-value">#B8965A</div>
+      </div>
+      <div class="token-swatch" style="background:#D4AF7A">
+        <div class="token-name">--color-gold-light</div>
+        <div class="token-value">#D4AF7A</div>
+      </div>
+      <div class="token-swatch" style="background:#F8F7F4;border:1px solid #ccc">
+        <div class="token-name" style="color:#1C2B4A">--color-bg</div>
+        <div class="token-value" style="color:#666">#F8F7F4</div>
+      </div>
+      <div class="token-swatch" style="background:#F3F0EA;border:1px solid #ccc">
+        <div class="token-name" style="color:#1C2B4A">--color-bg-warm</div>
+        <div class="token-value" style="color:#666">#F3F0EA</div>
+      </div>
+      <div class="token-swatch" style="background:#4A5568">
+        <div class="token-name">--color-text-mid</div>
+        <div class="token-value">#4A5568</div>
+      </div>
+      <div class="token-swatch" style="background:#8C96A8">
+        <div class="token-name">--color-text-light</div>
+        <div class="token-value">#8C96A8</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

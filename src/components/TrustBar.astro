@@ -1,0 +1,84 @@
+---
+const stats = [
+  { number: '500', unit: '+', label: '累計取引件数' },
+  { number: '15',  unit: '年', label: '業界経験' },
+  { number: '98',  unit: '%', label: '顧客満足度' },
+  { number: '24',  unit: 'h', label: 'お問い合わせ対応' },
+];
+---
+
+<div class="trust-bar">
+  <div class="trust-bar__inner">
+    {stats.map((stat, i) => (
+      <>
+        <div class="trust-stat">
+          <div class="trust-stat__number">
+            {stat.number}<span class="trust-stat__unit">{stat.unit}</span>
+          </div>
+          <div class="trust-stat__label">{stat.label}</div>
+        </div>
+        {i < stats.length - 1 && <div class="trust-bar__sep" aria-hidden="true" />}
+      </>
+    ))}
+  </div>
+</div>
+
+<style>
+  .trust-bar {
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: var(--space-md) 0;
+  }
+
+  .trust-bar__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  .trust-stat {
+    text-align: center;
+  }
+
+  .trust-stat__number {
+    font-family: var(--font-serif-en);
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--color-gold-light);
+    line-height: 1;
+  }
+
+  .trust-stat__unit {
+    font-family: var(--font-sans-ja);
+    font-size: 0.85rem;
+    margin-left: 2px;
+  }
+
+  .trust-stat__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.4rem;
+  }
+
+  .trust-bar__sep {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    .trust-bar__inner {
+      gap: var(--space-md);
+    }
+
+    .trust-bar__sep {
+      display: none;
+    }
+  }
+</style>

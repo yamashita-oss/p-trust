@@ -1,0 +1,127 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import TrustBar from '@/components/TrustBar.astro';
+import ServicesSection from '@/components/ServicesSection.astro';
+import PropertyCard from '@/components/PropertyCard.astro';
+import WhySection from '@/components/WhySection.astro';
+import TestimonialsSection from '@/components/TestimonialsSection.astro';
+import ContactSection from '@/components/ContactSection.astro';
+import { getProperties } from '@/lib/microcms';
+
+// microCMS から新着物件を3件取得
+let featuredProperties: any[] = [];
+try {
+  const res = await getProperties({ limit: 3, filters: 'status[equals]販売中' });
+  featuredProperties = res.contents;
+} catch {
+  // microCMS 未設定時はダミーデータを表示
+  featuredProperties = [
+    {
+      id: 'sample-1',
+      title: 'グランドステージ用賀',
+      area: '東京都世田谷区',
+      type: '売買',
+      status: '販売中',
+      price: 8500,
+      layout: '3LDK',
+      areaSize: 78.5,
+      age: 5,
+    },
+    {
+      id: 'sample-2',
+      title: 'ライオンズ二子玉川',
+      area: '東京都世田谷区 二子玉川',
+      type: '売買',
+      status: '新着',
+      price: 6200,
+      layout: '2LDK',
+      areaSize: 62.3,
+      age: 10,
+    },
+    {
+      id: 'sample-3',
+      title: '鎌田4丁目 一戸建て',
+      area: '東京都世田谷区 鎌田',
+      type: '売買',
+      status: '販売中',
+      price: 12000,
+      priceUnit: '万円',
+      layout: '4LDK',
+      areaSize: 120.0,
+      age: null,
+    },
+  ];
+}
+---
+
+<BaseLayout>
+  <Hero />
+  <TrustBar />
+  <ServicesSection />
+
+  <!-- おすすめ物件 -->
+  <section class="properties section" id="properties">
+    <div class="container">
+      <div class="properties__header">
+        <div>
+          <span class="section-label">Properties</span>
+          <h2 class="section-title">おすすめ物件</h2>
+          <div class="divider"></div>
+        </div>
+        <a href="/properties" class="btn btn--outline">物件一覧を見る</a>
+      </div>
+
+      <div class="properties__grid">
+        {featuredProperties.map((p) => (
+          <PropertyCard
+            title={p.title}
+            area={p.area}
+            type={p.type}
+            status={p.status}
+            price={p.price}
+            priceUnit={p.priceUnit ?? '万円'}
+            layout={p.layout}
+            areaSize={p.areaSize}
+            age={p.age}
+            image={p.image?.[0]?.url}
+            slug={p.id}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <WhySection />
+  <TestimonialsSection />
+  <ContactSection />
+</BaseLayout>
+
+<style>
+  .properties__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .properties__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .properties__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .properties__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

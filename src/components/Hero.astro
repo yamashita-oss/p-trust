@@ -1,0 +1,129 @@
+---
+---
+
+<section class="hero">
+  <div class="hero__content">
+    <div class="hero__eyebrow fade-in">Real Estate Partner</div>
+    <h1 class="hero__title fade-in fade-in-delay-1">
+      <strong>信頼</strong>と<strong>誠実</strong>で、<br />
+      あなたの<br />
+      不動産の夢を叶える。
+    </h1>
+    <p class="hero__desc fade-in fade-in-delay-2">
+      株式会社ピートラストは、世田谷を中心とした東京の不動産売買・仲介を専門とする会社です。
+      お客様の大切な資産と暮らしを、経験豊富なスタッフが誠実にサポートします。
+    </p>
+    <div class="hero__actions fade-in fade-in-delay-3">
+      <a href="/properties" class="btn btn--primary">物件を探す</a>
+      <a href="/contact" class="btn btn--outline">無料相談</a>
+    </div>
+  </div>
+
+  <div class="hero__image">
+    <img
+      src="/images/hero.jpg"
+      alt="東京・世田谷の不動産"
+      class="hero__img"
+      width="900"
+      height="700"
+    />
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-lg) var(--space-xl) var(--space-md);
+    max-width: 680px;
+    margin-left: auto;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-sans-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .hero__eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .hero__title {
+    font-family: var(--font-serif-ja);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero__title strong {
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .hero__desc {
+    font-size: 0.9rem;
+    color: var(--color-text-mid);
+    line-height: 1.9;
+    margin-bottom: var(--space-lg);
+    max-width: 480px;
+  }
+
+  .hero__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .hero__image {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-navy-pale);
+    min-height: 500px;
+  }
+
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 1024px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__image {
+      display: none;
+    }
+
+    .hero__content {
+      max-width: 100%;
+      padding: var(--space-xl) var(--space-md);
+      margin: 0;
+    }
+  }
+</style>

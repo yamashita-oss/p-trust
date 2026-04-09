@@ -1,0 +1,147 @@
+---
+interface Props {
+  label: string;   // 英語ラベル (例: "Company")
+  title: string;   // 日本語見出し
+  breadcrumbs?: { label: string; href?: string }[];
+}
+
+const { label, title, breadcrumbs = [] } = Astro.props;
+---
+
+<div class="page-header">
+  <!-- ストライプ装飾 (ロゴのモチーフ) -->
+  <div class="page-header__stripe" aria-hidden="true"></div>
+
+  <div class="container">
+    <!-- パンくず -->
+    {breadcrumbs.length > 0 && (
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <ol>
+          <li><a href="/">TOP</a></li>
+          {breadcrumbs.map(({ label, href }) => (
+            <li>
+              {href ? <a href={href}>{label}</a> : <span aria-current="page">{label}</span>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    <div class="page-header__content">
+      <span class="page-header__label">{label}</span>
+      <h1 class="page-header__title">{title}</h1>
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: calc(72px + var(--space-xl)) 0 var(--space-xl);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header__stripe {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 14px,
+      rgba(255, 255, 255, 0.04) 14px,
+      rgba(255, 255, 255, 0.04) 15px
+    );
+    pointer-events: none;
+  }
+
+  /* 右下のウォーターマーク */
+  .page-header::after {
+    content: 'P-TRUST';
+    position: absolute;
+    font-family: var(--font-serif-en);
+    font-size: 14rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.03);
+    right: -2rem;
+    bottom: -3rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .page-header__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header__label {
+    font-family: var(--font-sans-en);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-gold-light);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-header__label::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  .page-header__title {
+    font-family: var(--font-serif-ja);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+  }
+
+  /* パンくず */
+  .breadcrumb {
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--space-lg);
+  }
+
+  .breadcrumb ol {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb li {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .breadcrumb li + li::before {
+    content: '/';
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .breadcrumb a {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color var(--transition);
+  }
+
+  .breadcrumb a:hover {
+    color: var(--color-white);
+  }
+
+  .breadcrumb [aria-current="page"] {
+    color: var(--color-gold-light);
+  }
+</style>

@@ -1,0 +1,98 @@
+---
+const testimonials = [
+  {
+    text: '初めての不動産購入で不安でしたが、山下代表が細かい疑問にも丁寧に答えてくださり、安心して進められました。希望通りの物件を見つけていただけて本当に感謝しています。',
+    author: 'T.M 様',
+    meta: '世田谷区 マンション購入',
+  },
+  {
+    text: '売却を急いでいたにもかかわらず、適正価格を見極めてしっかり交渉してくれました。想定以上の金額で売却でき、プロに頼んで正解でした。',
+    author: 'K.S 様',
+    meta: '目黒区 一戸建て売却',
+  },
+  {
+    text: '投資用物件の相談から運用まで一貫してサポートいただいています。正直なアドバイスで無理のない計画が立てられ、長期的にお付き合いしています。',
+    author: 'Y.F 様',
+    meta: '渋谷区 投資物件管理',
+  },
+];
+---
+
+<section class="testimonials section section--warm">
+  <div class="container">
+    <div class="testimonials__header">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">お客様の声</h2>
+      <div class="divider divider--center"></div>
+    </div>
+
+    <div class="testimonials__grid">
+      {testimonials.map(({ text, author, meta }) => (
+        <blockquote class="testimonial-card">
+          <div class="testimonial-card__quote" aria-hidden="true">"</div>
+          <p class="testimonial-card__text">{text}</p>
+          <footer class="testimonial-card__footer">
+            <cite class="testimonial-card__author">{author}</cite>
+            <div class="testimonial-card__meta">{meta}</div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials__header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .testimonial-card {
+    background: var(--color-white);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .testimonial-card__quote {
+    font-family: var(--font-serif-en);
+    font-size: 3rem;
+    color: var(--color-gold);
+    line-height: 0.7;
+    opacity: 0.4;
+    margin-bottom: var(--space-sm);
+  }
+
+  .testimonial-card__text {
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: var(--color-text-mid);
+    margin-bottom: var(--space-md);
+  }
+
+  .testimonial-card__author {
+    font-style: normal;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: 0.05em;
+    display: block;
+  }
+
+  .testimonial-card__meta {
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

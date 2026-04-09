@@ -1,0 +1,178 @@
+---
+const points = [
+  {
+    num: '01',
+    title: '地域密着の専門性',
+    desc: '世田谷区を中心に15年以上の実績。地域の相場・条件を知り尽くしたアドバイスを提供します。',
+  },
+  {
+    num: '02',
+    title: '代表直接対応',
+    desc: '代表取締役・山下康太が直接ご相談に応じます。窓口の手間なく、経験ある担当者と直接交渉できます。',
+  },
+  {
+    num: '03',
+    title: '透明性のある取引',
+    desc: '費用・手続き・リスクを隠さず説明。お客様が納得した上で意思決定できる環境を整えています。',
+  },
+];
+---
+
+<section class="why section--navy" id="about">
+  <div class="container">
+    <div class="why__inner">
+      <div class="why__content">
+        <span class="section-label" style="color: var(--color-gold-light)">Why P-TRUST</span>
+        <h2 class="section-title" style="color: var(--color-white)">
+          ピートラストが<br />選ばれる理由
+        </h2>
+        <div class="divider" style="background: var(--color-gold)"></div>
+        <p class="why__lead">
+          「P」はPeople（人）・Professional（専門）・Partnership（絆）を意味し、
+          「TRUST」はお客様からの信頼を第一に掲げる私たちの姿勢を表しています。
+          世田谷エリアに根ざした豊富なネットワークと、誠実なコミュニケーションで
+          お客様の理想の不動産取引を実現します。
+        </p>
+        <div class="why__points">
+          {points.map(({ num, title, desc }) => (
+            <div class="why__point">
+              <span class="why__point-num">{num}</span>
+              <div>
+                <div class="why__point-title">{title}</div>
+                <p class="why__point-desc">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="why__image">
+        <div class="why__image-stripe" aria-hidden="true"></div>
+        <img
+          src="/images/president.jpg"
+          alt="代表取締役 山下康太"
+          class="why__img"
+          width="600"
+          height="750"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why {
+    background: var(--color-navy);
+    color: var(--color-white);
+    padding: var(--space-xl) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why::before {
+    content: 'P-TRUST';
+    position: absolute;
+    font-family: var(--font-serif-en);
+    font-size: 20rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.03);
+    right: -4rem;
+    bottom: -4rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .why__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .why__lead {
+    font-size: 0.88rem;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: var(--space-md);
+  }
+
+  .why__points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .why__point {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .why__point-num {
+    font-family: var(--font-serif-en);
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--color-gold);
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+
+  .why__point-title {
+    font-family: var(--font-serif-ja);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: var(--color-white);
+  }
+
+  .why__point-desc {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.8;
+  }
+
+  .why__image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: #2E4070;
+  }
+
+  .why__image-stripe {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 12px,
+      rgba(255, 255, 255, 0.06) 12px,
+      rgba(255, 255, 255, 0.06) 13px
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .why__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .why__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .why__image {
+      display: none;
+    }
+
+    .why::before {
+      font-size: 8rem;
+    }
+  }
+</style>

@@ -1,0 +1,233 @@
+---
+const navLinks = [
+  { href: '/#services',    label: 'サービス' },
+  { href: '/properties',  label: '物件情報' },
+  { href: '/about',       label: '会社案内' },
+  { href: '/news',        label: 'お知らせ' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="/" class="header__logo" aria-label="P-TRUST トップページ">
+      <img src="/logo-mark.jpg" alt="" class="header__logo-mark" width="40" height="40" aria-hidden="true" />
+      <span class="header__logo-name">P-TRUST</span>
+    </a>
+
+    <nav class="nav" aria-label="グローバルナビゲーション">
+      {navLinks.map(({ href, label }) => (
+        <a
+          href={href}
+          class:list={['nav__link', { 'nav__link--active': pathname === href }]}
+        >
+          {label}
+        </a>
+      ))}
+      <a href="/contact" class="nav__cta">お問い合わせ</a>
+    </nav>
+
+    <button class="nav__hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <!-- モバイルメニュー -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav>
+      {navLinks.map(({ href, label }) => (
+        <a href={href} class="mobile-menu__link">{label}</a>
+      ))}
+      <a href="/contact" class="mobile-menu__cta btn btn--primary">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+    transition: box-shadow var(--transition);
+  }
+
+  .header.scrolled {
+    box-shadow: 0 2px 20px rgba(28, 43, 74, 0.08);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  .header__logo-mark {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .header__logo-name {
+    font-family: var(--font-sans-en);
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--color-navy);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav__link {
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text-mid);
+    transition: color var(--transition);
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-gold);
+    transition: width var(--transition);
+  }
+
+  .nav__link:hover,
+  .nav__link--active {
+    color: var(--color-navy);
+  }
+
+  .nav__link:hover::after,
+  .nav__link--active::after {
+    width: 100%;
+  }
+
+  .nav__cta {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    padding: 0.55rem 1.4rem;
+    background: var(--color-navy);
+    color: var(--color-white);
+    border: 1px solid var(--color-navy);
+    transition: var(--transition);
+  }
+
+  .nav__cta:hover {
+    background: transparent;
+    color: var(--color-navy);
+  }
+
+  /* ハンバーガー */
+  .nav__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav__hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--color-navy);
+    transition: var(--transition);
+  }
+
+  /* モバイルメニュー */
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: var(--color-white);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-md);
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .mobile-menu[data-open] {
+    display: flex;
+  }
+
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .mobile-menu__link {
+    font-size: 0.9rem;
+    color: var(--color-text-mid);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobile-menu__cta {
+    margin-top: var(--space-xs);
+    text-align: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+    }
+
+    .nav__hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('header');
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // スクロールでヘッダーにシャドウ
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  // ハンバーガーメニュー開閉
+  hamburger?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.hasAttribute('data-open');
+    if (isOpen) {
+      mobileMenu?.removeAttribute('data-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu?.setAttribute('aria-hidden', 'true');
+    } else {
+      mobileMenu?.setAttribute('data-open', '');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu?.setAttribute('aria-hidden', 'false');
+    }
+  });
+</script>

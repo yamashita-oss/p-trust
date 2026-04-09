@@ -1,0 +1,496 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+
+const companyData = [
+  { label: '会社名',       value: '株式会社ピートラスト' },
+  { label: '英語名',       value: 'P-TRUST CO., LTD.' },
+  { label: '代表取締役',   value: '山下 康太' },
+  { label: '設立',         value: '—' },        // 正確な設立年が確認できたら更新
+  { label: '資本金',       value: '—' },
+  { label: '所在地',       value: '〒157-0077 東京都世田谷区鎌田3-18-15 ロフティー玉川' },
+  { label: 'TEL',          value: '03-6805-7608' },
+  { label: 'FAX',          value: '03-6805-7609' },
+  { label: 'MAIL',         value: 'yamashita@ptrust-web.com' },
+  { label: '事業内容',     value: '不動産売買・仲介、不動産賃貸・管理、資産運用コンサルティング' },
+  { label: '免許番号',     value: '—' },        // 宅建業免許番号を確認後に更新
+  { label: '加盟団体',     value: '—' },
+];
+---
+
+<BaseLayout
+  title="会社概要 | P-TRUST 株式会社ピートラスト"
+  description="株式会社ピートラストの会社概要・代表メッセージ・アクセスをご紹介します。東京都世田谷区を拠点に不動産売買・仲介を行っています。"
+>
+  <PageHeader
+    label="Company"
+    title="会社案内"
+    breadcrumbs={[{ label: '会社案内' }]}
+  />
+
+  <!-- ============================================
+       代表メッセージ
+       ============================================ -->
+  <section class="section" id="message">
+    <div class="container">
+      <div class="message__inner">
+
+        <div class="message__image-wrap">
+          <div class="message__image">
+            <img
+              src="/images/president.jpg"
+              alt="代表取締役 山下 康太"
+              class="message__img"
+              width="480"
+              height="560"
+            />
+            <div class="message__image-caption">
+              代表取締役&ensp;山下 康太
+            </div>
+          </div>
+          <!-- 装飾フレーム -->
+          <div class="message__image-deco" aria-hidden="true"></div>
+        </div>
+
+        <div class="message__content">
+          <span class="section-label">Message</span>
+          <h2 class="section-title">代表メッセージ</h2>
+          <div class="divider"></div>
+
+          <div class="message__body">
+            <p>
+              この度は、株式会社ピートラストのウェブサイトをご覧いただきありがとうございます。
+            </p>
+            <p>
+              私たちの社名「P-TRUST」の「P」には、<strong>People（人）</strong>・<strong>Professional（専門性）</strong>・<strong>Partnership（絆）</strong>という3つの意味を込めています。
+              不動産という人生で最も大きな買い物をお手伝いするにあたり、何よりも大切にしているのは「人と人との信頼」です。
+            </p>
+            <p>
+              世田谷という地域に根ざし、15年以上の経験を積んできた私が直接ご相談をお受けすることで、画一的なサービスではなく、お客様お一人おひとりに合ったご提案ができると考えています。
+            </p>
+            <p>
+              不動産の購入・売却・運用など、どうぞお気軽にご相談ください。誠実に、そして真摯に向き合うことをお約束いたします。
+            </p>
+          </div>
+
+          <div class="message__signature">
+            <div class="message__signature-company">株式会社ピートラスト</div>
+            <div class="message__signature-role">代表取締役</div>
+            <div class="message__signature-name">山下 康太</div>
+            <div class="message__signature-name-en">YAMASHITA, Kota</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       会社概要テーブル
+       ============================================ -->
+  <section class="section section--bg" id="overview">
+    <div class="container container--narrow">
+      <div style="text-align:center">
+        <span class="section-label">Profile</span>
+        <h2 class="section-title">会社概要</h2>
+        <div class="divider divider--center"></div>
+      </div>
+
+      <table class="company-table">
+        <tbody>
+          {companyData.map(({ label, value }) => (
+            <tr class="company-table__row">
+              <th class="company-table__label">{label}</th>
+              <td class="company-table__value">
+                {label === 'TEL'
+                  ? <a href={`tel:${value.replace(/-/g, '')}`}>{value}</a>
+                  : label === 'MAIL'
+                  ? <a href={`mailto:${value}`}>{value}</a>
+                  : value
+                }
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================================
+       アクセス
+       ============================================ -->
+  <section class="section" id="access">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:var(--space-lg)">
+        <span class="section-label">Access</span>
+        <h2 class="section-title">アクセス</h2>
+        <div class="divider divider--center"></div>
+      </div>
+
+      <div class="access__inner">
+        <div class="access__info">
+          <dl class="access__dl">
+            <div class="access__dl-row">
+              <dt>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6C3.5 9.5 8 14.5 8 14.5C8 14.5 12.5 9.5 12.5 6C12.5 3.5 10.5 1.5 8 1.5Z" stroke="#1C2B4A" stroke-width="1.2"/>
+                  <circle cx="8" cy="6" r="1.5" stroke="#B8965A" stroke-width="1.2"/>
+                </svg>
+                所在地
+              </dt>
+              <dd>
+                〒157-0077<br />
+                東京都世田谷区鎌田3-18-15 ロフティー玉川
+              </dd>
+            </div>
+            <div class="access__dl-row">
+              <dt>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 3 Q3 2 4 2 L6.5 2 L7.5 5.5 L6 6.5 Q7 9 9 11 L10 9.5 L13.5 10.5 L13.5 13 Q13.5 14 12.5 14 Q6 14 3 3Z" stroke="#1C2B4A" stroke-width="1.2" fill="none"/>
+                </svg>
+                電話
+              </dt>
+              <dd>
+                <a href="tel:0368057608">03-6805-7608</a>
+                <span class="access__note">（平日 10:00〜18:00）</span>
+              </dd>
+            </div>
+            <div class="access__dl-row">
+              <dt>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="1.5" y="4" width="13" height="9" rx="1" stroke="#1C2B4A" stroke-width="1.2"/>
+                  <polyline points="1.5,4 8,9 14.5,4" stroke="#B8965A" stroke-width="1.2" fill="none"/>
+                </svg>
+                メール
+              </dt>
+              <dd>
+                <a href="mailto:yamashita@ptrust-web.com">yamashita@ptrust-web.com</a>
+              </dd>
+            </div>
+            <div class="access__dl-row">
+              <dt>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="2" y="1" width="12" height="14" rx="2" stroke="#1C2B4A" stroke-width="1.2"/>
+                  <circle cx="8" cy="12.5" r="0.8" fill="#B8965A"/>
+                  <line x1="5" y1="4" x2="11" y2="4" stroke="#1C2B4A" stroke-width="1"/>
+                </svg>
+                携帯
+              </dt>
+              <dd>
+                <a href="tel:09055895664">090-5589-5664</a>
+              </dd>
+            </div>
+            <div class="access__dl-row">
+              <dt>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="8" cy="8" r="6" stroke="#1C2B4A" stroke-width="1.2"/>
+                  <polyline points="8,4 8,8 10.5,10.5" stroke="#B8965A" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                最寄り駅
+              </dt>
+              <dd>東急田園都市線・大井町線「二子玉川」駅</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Google マップ埋め込み -->
+        <div class="access__map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3243.197!2d139.6!3d35.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z5p2x5Lqs6YO95LiW55Sw5Yy65paH55Sw3-18-15!5e0!3m2!1sja!2sjp!4v1"
+            width="600"
+            height="400"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="株式会社ピートラスト アクセスマップ"
+            class="access__iframe"
+          ></iframe>
+          <p class="access__map-note">
+            ※ 地図は参考表示です。実際の住所でご確認ください。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--warm" style="text-align:center">
+    <div class="container container--narrow">
+      <span class="section-label">Contact</span>
+      <h2 class="section-title">まずはお気軽にご相談ください</h2>
+      <div class="divider divider--center"></div>
+      <p style="font-size:0.875rem; color:var(--color-text-mid); margin-bottom:var(--space-md)">
+        不動産のことなら何でもお気軽にどうぞ。
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+        <a href="/contact" class="btn btn--primary">お問い合わせフォーム</a>
+        <a href="tel:0368057608" class="btn btn--outline">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M2.5 2 Q2.5 1 3.5 1 L5.5 1 L6.5 4.5 L5 5.5 Q6 7.5 8 9.5 L9 8 L12.5 9 L12.5 11 Q12.5 12 11.5 12 Q5 12 2.5 2Z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          </svg>
+          03-6805-7608
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ============================================
+     代表メッセージ
+     ============================================ */
+  .message__inner {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  .message__image-wrap {
+    position: relative;
+  }
+
+  .message__image {
+    position: relative;
+    z-index: 1;
+  }
+
+  .message__img {
+    width: 100%;
+    aspect-ratio: 6 / 7;
+    object-fit: cover;
+    object-position: top;
+    /* 写真がない場合のフォールバック */
+    background: linear-gradient(160deg, var(--color-navy-pale) 0%, #CDD5E0 100%);
+    min-height: 360px;
+  }
+
+  .message__image-caption {
+    background: var(--color-navy);
+    color: var(--color-white);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    padding: 0.75rem var(--space-sm);
+    text-align: center;
+  }
+
+  /* 右下にオフセットする装飾フレーム */
+  .message__image-deco {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    right: calc(var(--space-sm) * -1);
+    bottom: calc(var(--space-sm) * -1);
+    border: 1px solid var(--color-gold);
+    opacity: 0.4;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .message__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .message__body p {
+    font-size: 0.9rem;
+    line-height: 2;
+    color: var(--color-text-mid);
+  }
+
+  .message__body strong {
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+
+  .message__signature {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .message__signature-company {
+    font-size: 0.78rem;
+    color: var(--color-text-light);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .message__signature-role {
+    font-size: 0.8rem;
+    color: var(--color-text-mid);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.2rem;
+  }
+
+  .message__signature-name {
+    font-family: var(--font-serif-ja);
+    font-size: 1.6rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: var(--color-navy);
+    line-height: 1.3;
+  }
+
+  .message__signature-name-en {
+    font-family: var(--font-sans-en);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: var(--color-text-light);
+    margin-top: 0.3rem;
+  }
+
+  /* ============================================
+     会社概要テーブル
+     ============================================ */
+  .company-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-lg);
+  }
+
+  .company-table__row {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .company-table__row:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .company-table__label {
+    font-family: var(--font-sans-ja);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-mid);
+    letter-spacing: 0.05em;
+    padding: 1.1rem var(--space-md) 1.1rem 0;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 130px;
+  }
+
+  .company-table__value {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    padding: 1.1rem 0;
+    line-height: 1.7;
+  }
+
+  .company-table__value a {
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--color-border);
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .company-table__value a:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  /* ============================================
+     アクセス
+     ============================================ */
+  .access__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .access__dl {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .access__dl-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--space-sm);
+    align-items: baseline;
+  }
+
+  .access__dl-row dt {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-mid);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-top: 0.1rem;
+  }
+
+  .access__dl-row dd {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    line-height: 1.7;
+  }
+
+  .access__dl-row dd a {
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--color-border);
+    transition: var(--transition);
+  }
+
+  .access__dl-row dd a:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+  }
+
+  .access__note {
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    margin-left: 0.5rem;
+  }
+
+  .access__map {
+    position: relative;
+  }
+
+  .access__iframe {
+    width: 100%;
+    height: 380px;
+    display: block;
+    border: 1px solid var(--color-border);
+  }
+
+  .access__map-note {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    margin-top: 0.5rem;
+  }
+
+  /* ============================================
+     レスポンシブ
+     ============================================ */
+  @media (max-width: 1024px) {
+    .message__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .message__image-wrap {
+      max-width: 400px;
+    }
+
+    .access__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .access__iframe {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .company-table__label {
+      width: 100px;
+    }
+
+    .access__dl-row {
+      grid-template-columns: 70px 1fr;
+    }
+  }
+</style>

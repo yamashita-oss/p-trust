@@ -1,0 +1,19 @@
+# 依存関係
+node_modules/
+
+# ビルド出力
+dist/
+.astro/
+
+# 環境変数 (コミットしない)
+.env
+.env.local
+.env.*.local
+
+# エディタ
+.DS_Store
+.idea/
+.vscode/settings.json
+
+# ログ
+npm-debug.log*

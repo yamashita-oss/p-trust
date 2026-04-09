@@ -1,0 +1,148 @@
+---
+---
+
+<section class="cta-section section section--bg" id="contact">
+  <div class="container container--narrow" style="text-align: center">
+    <span class="section-label">Contact</span>
+    <h2 class="section-title">まずはお気軽に<br />ご相談ください</h2>
+    <div class="divider divider--center"></div>
+    <p class="cta-section__lead">
+      不動産の購入・売却・運用など、どんなご相談もお受けしております。<br />
+      お電話・メール・フォームからお気軽にご連絡ください。
+    </p>
+
+    <div class="contact-cards">
+      <!-- 電話 -->
+      <div class="contact-card">
+        <div class="contact-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 8 Q8 6 10 6 L16 6 L19 14 L15 17 Q18 23 23 28 L26 24 L34 27 L34 33 Q34 35 32 35 Q16 35 8 8Z" stroke="#1C2B4A" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div class="contact-card__title">お電話でのご相談</div>
+        <a href="tel:0368057608" class="contact-card__detail">03-6805-7608</a>
+        <div class="contact-card__note">平日 10:00〜18:00</div>
+      </div>
+
+      <!-- メール -->
+      <div class="contact-card">
+        <div class="contact-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="10" width="32" height="22" rx="2" stroke="#1C2B4A" stroke-width="1.2"/>
+            <polyline points="4,10 20,22 36,10" stroke="#B8965A" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div class="contact-card__title">メールでのご相談</div>
+        <a href="mailto:yamashita@ptrust-web.com" class="contact-card__detail contact-card__detail--sm">
+          yamashita@ptrust-web.com
+        </a>
+        <div class="contact-card__note">24時間受付</div>
+      </div>
+
+      <!-- フォーム -->
+      <div class="contact-card contact-card--navy">
+        <div class="contact-card__icon contact-card__icon--white" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="6" width="28" height="28" rx="2" stroke="white" stroke-width="1.2"/>
+            <line x1="12" y1="16" x2="28" y2="16" stroke="#D4AF7A" stroke-width="1.2"/>
+            <line x1="12" y1="21" x2="28" y2="21" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+            <line x1="12" y1="26" x2="20" y2="26" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <div class="contact-card__title contact-card__title--white">フォームから相談</div>
+        <a href="/contact" class="btn btn--gold" style="margin-top: var(--space-xs)">
+          無料相談を申し込む
+        </a>
+        <div class="contact-card__note contact-card__note--light">通常1営業日以内に返信</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section__lead {
+    font-size: 0.875rem;
+    color: var(--color-text-mid);
+    line-height: 1.9;
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .contact-card {
+    flex: 1;
+    min-width: 220px;
+    max-width: 300px;
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    text-align: center;
+    background: var(--color-white);
+  }
+
+  .contact-card--navy {
+    background: var(--color-navy);
+    border-color: var(--color-navy);
+  }
+
+  .contact-card__icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto var(--space-sm);
+  }
+
+  .contact-card__title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+  }
+
+  .contact-card__title--white {
+    color: var(--color-white);
+  }
+
+  .contact-card__detail {
+    display: block;
+    font-family: var(--font-sans-en);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--color-navy);
+    transition: color var(--transition);
+  }
+
+  .contact-card__detail--sm {
+    font-size: 0.82rem;
+  }
+
+  .contact-card__detail:hover {
+    color: var(--color-gold);
+  }
+
+  .contact-card__note {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    margin-top: var(--space-xs);
+  }
+
+  .contact-card__note--light {
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: var(--space-sm);
+  }
+
+  @media (max-width: 600px) {
+    .contact-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .contact-card {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+</style>
