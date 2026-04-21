@@ -1,8 +1,7 @@
 ---
 const navLinks = [
-  { href: '/#news',        label: 'お知らせ' },
-  { href: '/#services',    label: 'サービス' },
-  { href: '/properties',   label: '物件情報' },
+  { href: '/#services',    label: 'サービス案内' },
+  { href: '/#properties',  label: '物件情報' },
   { href: '/#company',     label: '会社概要' },
 ];
 
@@ -12,7 +11,7 @@ const pathname = Astro.url.pathname;
 <header class="header" id="header">
   <div class="header__inner">
     <a href="/" class="header__logo" aria-label="P-TRUST トップページ">
-      <img src="/images/logo.svg" alt="P-TRUST" class="header__logo-img" width="80" height="67" />
+      <img src="/images/P-TRUST-5.svg" alt="P-TRUST" class="header__logo-img" width="80" height="67" />
     </a>
 
     <nav class="nav" aria-label="グローバルナビゲーション">
@@ -59,7 +58,7 @@ const pathname = Astro.url.pathname;
   }
 
   .header.scrolled {
-    box-shadow: 0 2px 20px rgba(28, 43, 74, 0.08);
+    box-shadow: 0 2px 20px rgba(46, 31, 15, 0.08);
   }
 
   .header__inner {
@@ -120,6 +119,7 @@ const pathname = Astro.url.pathname;
     font-weight: 500;
     letter-spacing: 0.1em;
     padding: 0.55rem 1.4rem;
+    border-radius: 999px;
     background: var(--color-navy);
     color: var(--color-white);
     border: 1px solid var(--color-navy);

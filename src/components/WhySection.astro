@@ -70,21 +70,7 @@ const points = [
     overflow: hidden;
   }
 
-  .why::before {
-    content: 'P-TRUST';
-    position: absolute;
-    font-family: var(--font-serif-en);
-    font-size: 20rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.03);
-    right: -4rem;
-    bottom: -4rem;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .why__inner {
+.why__inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-xl);
@@ -137,7 +123,7 @@ const points = [
     position: relative;
     overflow: hidden;
     aspect-ratio: 4 / 5;
-    background: #2E4070;
+    background: #5C3D22;
   }
 
   .why__image-stripe {
@@ -165,14 +151,11 @@ const points = [
   @media (max-width: 1024px) {
     .why__inner {
       grid-template-columns: 1fr;
+      gap: var(--space-lg);
     }
 
     .why__image {
       display: none;
-    }
-
-    .why::before {
-      font-size: 8rem;
     }
   }
 </style>

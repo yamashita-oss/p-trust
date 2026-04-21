@@ -15,7 +15,6 @@ function getClient() {
 // ============================================
 
 export type PropertyType = '売買' | '賃貸' | '投資';
-export type PropertyStatus = '販売中' | '成約済み' | '新着';
 
 export interface MicroCMSImage {
   url: string;
@@ -28,20 +27,14 @@ export interface Property {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  /** 物件名 */
   title: string;
-  area: string;
+  /** 物件種別（セレクト: 売買 / 賃貸 / 投資） */
   type: PropertyType;
-  status: PropertyStatus;
-  price: number;
-  priceUnit?: string;
-  layout: string;
-  areaSize: number;
-  age: number | null;
-  image: MicroCMSImage[];
-  description: string;
-  features?: string[];
-  address?: string;
-  nearestStation?: string;
+  /** 価格テキスト（例: "8,500万円"、"応相談" など自由記述） */
+  price: string;
+  /** 物件画像 */
+  image?: MicroCMSImage;
 }
 
 export interface NewsArticle {

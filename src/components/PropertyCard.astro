@@ -1,59 +1,31 @@
 ---
 interface Props {
   title: string;
-  area: string;
-  type: '売買' | '賃貸' | '投資';
-  status?: '販売中' | '成約済み' | '新着';
-  price: number;
-  priceUnit?: string;
-  layout: string;
-  areaSize: number;
-  age?: number | null;
+  type: string;
+  price: string;
   image?: string;
   slug: string;
 }
 
-const {
-  title,
-  area,
-  type,
-  status,
-  price,
-  priceUnit = '万円',
-  layout,
-  areaSize,
-  age,
-  image,
-  slug,
-} = Astro.props;
-
-const tagLabel = status === '新着' ? '新着' : type;
-const tagClass = status === '新着' ? 'tag--gold' : '';
+const { title, type, price, image, slug } = Astro.props;
 ---
 
 <article class="property-card">
   <a href={`/properties/${slug}`} class="property-card__inner">
+
     <div class="property-card__image-wrap">
       {image
         ? <img src={image} alt={title} class="property-card__img" width="400" height="260" loading="lazy" />
         : <div class="property-card__img-placeholder" aria-hidden="true">物件写真</div>
       }
-      <span class={`tag ${tagClass}`}>{tagLabel}</span>
+      <span class="property-card__type">{type}</span>
     </div>
 
     <div class="property-card__body">
-      <div class="property-card__area">{area}</div>
-      <div class="property-card__name">{title}</div>
-      <div class="property-card__price">
-        {price.toLocaleString()}<span>{priceUnit}</span>
-      </div>
-      <ul class="property-card__specs">
-        <li>{layout}</li>
-        <li>{areaSize}m²</li>
-        {age != null && <li>築{age}年</li>}
-        {age === null && <li>新築</li>}
-      </ul>
+      <div class="property-card__title">{title}</div>
+      <div class="property-card__price">{price}</div>
     </div>
+
   </a>
 </article>
 
@@ -61,18 +33,19 @@ const tagClass = status === '新着' ? 'tag--gold' : '';
   .property-card {
     border: 1px solid var(--color-border);
     overflow: hidden;
-    transition: var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
 
   .property-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card);
   }
 
   .property-card__inner {
     display: block;
   }
 
+  /* 画像 */
   .property-card__image-wrap {
     position: relative;
     overflow: hidden;
@@ -82,89 +55,58 @@ const tagClass = status === '新着' ? 'tag--gold' : '';
     width: 100%;
     height: 220px;
     object-fit: cover;
+    display: block;
     transition: transform 0.5s ease;
   }
 
   .property-card:hover .property-card__img {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 
   .property-card__img-placeholder {
     height: 220px;
-    background: linear-gradient(135deg, var(--color-navy-pale) 0%, #cdd5e0 100%);
+    background: linear-gradient(135deg, var(--color-navy-pale), var(--color-bg-warm));
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-text-light);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.1em;
   }
 
-  .tag {
+  /* 物件種別バッジ */
+  .property-card__type {
     position: absolute;
-    top: var(--space-sm);
-    left: var(--space-sm);
-    display: inline-block;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
+    top: 0.8rem;
+    left: 0.8rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     padding: 0.25rem 0.7rem;
+    border-radius: 999px;
     background: var(--color-navy);
     color: var(--color-white);
   }
 
-  .tag--gold {
-    background: var(--color-gold);
-  }
-
+  /* テキスト */
   .property-card__body {
-    padding: var(--space-md);
+    padding: 1.2rem var(--space-md);
   }
 
-  .property-card__area {
-    font-size: 0.72rem;
-    color: var(--color-text-light);
-    letter-spacing: 0.08em;
-    margin-bottom: 0.3rem;
-  }
-
-  .property-card__name {
+  .property-card__title {
     font-family: var(--font-serif-ja);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: var(--space-xs);
+    font-size: 0.95rem;
+    font-weight: 400;
     color: var(--color-text);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
   }
 
   .property-card__price {
     font-family: var(--font-serif-en);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 400;
     color: var(--color-navy);
-    font-weight: 400;
-    line-height: 1.2;
-  }
-
-  .property-card__price span {
-    font-family: var(--font-sans-ja);
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--color-text-mid);
-    margin-left: 2px;
-  }
-
-  .property-card__specs {
-    list-style: none;
-    display: flex;
-    gap: var(--space-sm);
-    margin-top: var(--space-sm);
-    padding-top: var(--space-sm);
-    border-top: 1px solid var(--color-border);
-    font-size: 0.75rem;
-    color: var(--color-text-mid);
-  }
-
-  .property-card__specs li + li::before {
-    content: '|';
-    margin-right: var(--space-sm);
-    color: var(--color-border);
+    letter-spacing: 0.02em;
   }
 </style>

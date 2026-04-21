@@ -1,0 +1,206 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import { getProperties } from '@/lib/microcms';
+
+let properties: any[] = [];
+try {
+  const res = await getProperties({ limit: 10 });
+  properties = res.contents;
+} catch {
+  properties = [
+    { id: 'sample-1',  title: 'グランドステージ用賀',       type: '売買', price: '8,500万円'     },
+    { id: 'sample-2',  title: 'ライオンズ二子玉川',          type: '売買', price: '6,200万円'     },
+    { id: 'sample-3',  title: '鎌田4丁目 一戸建て',          type: '売買', price: '1億2,000万円'  },
+    { id: 'sample-4',  title: 'パークコート成城',             type: '売買', price: '9,800万円'     },
+    { id: 'sample-5',  title: 'プラウド尾山台',               type: '賃貸', price: '月額 22万円'   },
+    { id: 'sample-6',  title: 'ブリリア等々力',               type: '売買', price: '1億1,500万円'  },
+    { id: 'sample-7',  title: 'クレヴィア桜新町',             type: '賃貸', price: '月額 16万円'   },
+    { id: 'sample-8',  title: 'ザ・パークハウス三軒茶屋',    type: '投資', price: '8,100万円'     },
+    { id: 'sample-9',  title: '上野毛2丁目 土地',             type: '売買', price: '1億5,000万円'  },
+    { id: 'sample-10', title: 'シティハウス経堂',             type: '売買', price: '6,900万円'     },
+  ];
+}
+---
+
+<BaseLayout
+  title="物件情報 | P-TRUST 株式会社ピートラスト"
+  description="P-TRUSTが取り扱う東京・世田谷エリアの不動産物件一覧です。"
+>
+  <PageHeader
+    label="Properties"
+    title="物件情報"
+    breadcrumbs={[{ label: '物件情報' }]}
+  />
+
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="list-note">全 {properties.length} 件</p>
+
+      <ul class="property-list">
+        {properties.map((p) => (
+          <li class="property-row">
+            <a href={`/properties/${p.id}`} class="property-row__inner">
+
+              <div class="property-row__image">
+                {p.image?.url
+                  ? <img src={p.image.url} alt={p.title} width="280" height="188" loading="lazy" class="property-row__img" />
+                  : <div class="property-row__img-placeholder" aria-hidden="true">物件写真</div>
+                }
+              </div>
+
+              <div class="property-row__body">
+                <span class="property-row__type">{p.type}</span>
+                <div class="property-row__title">{p.title}</div>
+                <div class="property-row__price">{p.price}</div>
+              </div>
+
+              <div class="property-row__arrow" aria-hidden="true">→</div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list-note {
+    font-size: 0.78rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-md);
+    letter-spacing: 0.05em;
+  }
+
+  .property-list {
+    list-style: none;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .property-row {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .property-row__inner {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    gap: var(--space-md);
+    align-items: center;
+    padding: var(--space-md) 0.5rem;
+    transition: background var(--transition);
+    border-radius: 4px;
+  }
+
+  .property-row__inner:hover {
+    background: var(--color-bg);
+  }
+
+  /* 画像 */
+  .property-row__image {
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .property-row__img {
+    width: 100%;
+    height: 148px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .property-row__inner:hover .property-row__img {
+    transform: scale(1.03);
+  }
+
+  .property-row__img-placeholder {
+    width: 100%;
+    height: 148px;
+    background: linear-gradient(135deg, var(--color-navy-pale), var(--color-bg-warm));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    color: var(--color-text-light);
+    letter-spacing: 0.08em;
+  }
+
+  /* テキスト */
+  .property-row__body {
+    min-width: 0;
+  }
+
+  .property-row__type {
+    display: inline-block;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--color-navy);
+    color: var(--color-white);
+    margin-bottom: 0.6rem;
+  }
+
+  .property-row__title {
+    font-family: var(--font-serif-ja);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .property-row__price {
+    font-family: var(--font-serif-en);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--color-navy);
+    letter-spacing: 0.02em;
+  }
+
+  /* 矢印 */
+  .property-row__arrow {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    transition: transform var(--transition), color var(--transition);
+    flex-shrink: 0;
+    padding-right: 0.5rem;
+  }
+
+  .property-row__inner:hover .property-row__arrow {
+    transform: translateX(4px);
+    color: var(--color-gold);
+  }
+
+  /* タブレット */
+  @media (max-width: 768px) {
+    .property-row__inner {
+      grid-template-columns: 160px 1fr auto;
+      gap: 1rem;
+    }
+
+    .property-row__img,
+    .property-row__img-placeholder {
+      height: 110px;
+    }
+  }
+
+  /* モバイル */
+  @media (max-width: 520px) {
+    .property-row__inner {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .property-row__img,
+    .property-row__img-placeholder {
+      height: 200px;
+      width: 100%;
+    }
+
+    .property-row__arrow {
+      display: none;
+    }
+  }
+</style>

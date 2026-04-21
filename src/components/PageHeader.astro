@@ -44,31 +44,7 @@ const { label, title, breadcrumbs = [] } = Astro.props;
   }
 
   .page-header__stripe {
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 14px,
-      rgba(255, 255, 255, 0.04) 14px,
-      rgba(255, 255, 255, 0.04) 15px
-    );
-    pointer-events: none;
-  }
-
-  /* 右下のウォーターマーク */
-  .page-header::after {
-    content: 'P-TRUST';
-    position: absolute;
-    font-family: var(--font-serif-en);
-    font-size: 14rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.03);
-    right: -2rem;
-    bottom: -3rem;
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
+    display: none;
   }
 
   .page-header__content {
@@ -143,5 +119,15 @@ const { label, title, breadcrumbs = [] } = Astro.props;
 
   .breadcrumb [aria-current="page"] {
     color: var(--color-gold-light);
+  }
+
+  @media (max-width: 768px) {
+    .page-header {
+      padding: calc(72px + 2.5rem) 0 2.5rem;
+    }
+
+    .page-header__title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
   }
 </style>

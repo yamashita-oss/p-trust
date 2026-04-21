@@ -3,19 +3,16 @@ const services = [
   {
     title: '売買仲介',
     desc: 'マンション・一戸建て・土地の売買をトータルサポート。適正価格の査定から契約・引渡しまで、丁寧にご案内します。',
-    href: '/services#brokerage',
     icon: 'house',
   },
   {
     title: '資産運用コンサルティング',
     desc: '不動産を通じた資産形成・収益化をご提案。投資用物件の選定から収支計画まで専門家が対応します。',
-    href: '/services#consulting',
     icon: 'chart',
   },
   {
     title: '賃貸・管理',
     desc: 'オーナー様の物件を入居者募集から月次管理まで一括サポート。長期安定運用をトータルでお手伝いします。',
-    href: '/services#management',
     icon: 'building',
   },
 ];
@@ -30,35 +27,34 @@ const services = [
     </div>
 
     <div class="services__grid">
-      {services.map(({ title, desc, href, icon }) => (
+      {services.map(({ title, desc, icon }) => (
         <article class="service-card">
           <div class="service-card__icon" aria-hidden="true">
             {icon === 'house' && (
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="6" y="16" width="36" height="26" stroke="#1C2B4A" stroke-width="1.5" rx="1"/>
-                <path d="M3 20 L24 6 L45 20" stroke="#1C2B4A" stroke-width="1.5" stroke-linejoin="round"/>
-                <rect x="18" y="28" width="12" height="14" stroke="#B8965A" stroke-width="1.2"/>
+                <rect x="6" y="16" width="36" height="26" stroke="#2E1F0F" stroke-width="1.5" rx="1"/>
+                <path d="M3 20 L24 6 L45 20" stroke="#2E1F0F" stroke-width="1.5" stroke-linejoin="round"/>
+                <rect x="18" y="28" width="12" height="14" stroke="#A86B44" stroke-width="1.2"/>
               </svg>
             )}
             {icon === 'chart' && (
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="6,36 16,22 24,28 36,14 42,20" stroke="#1C2B4A" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-                <circle cx="36" cy="14" r="3" fill="#B8965A"/>
-                <line x1="6" y1="38" x2="42" y2="38" stroke="#1C2B4A" stroke-width="1" stroke-dasharray="3 2"/>
+                <polyline points="6,36 16,22 24,28 36,14 42,20" stroke="#2E1F0F" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+                <circle cx="36" cy="14" r="3" fill="#A86B44"/>
+                <line x1="6" y1="38" x2="42" y2="38" stroke="#2E1F0F" stroke-width="1" stroke-dasharray="3 2"/>
               </svg>
             )}
             {icon === 'building' && (
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="8" width="32" height="32" rx="2" stroke="#1C2B4A" stroke-width="1.5"/>
-                <line x1="8" y1="18" x2="40" y2="18" stroke="#1C2B4A" stroke-width="1"/>
-                <line x1="22" y1="8" x2="22" y2="40" stroke="#1C2B4A" stroke-width="1"/>
-                <path d="M14 26 L18 30 L26 22" stroke="#B8965A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="8" y="8" width="32" height="32" rx="2" stroke="#2E1F0F" stroke-width="1.5"/>
+                <line x1="8" y1="18" x2="40" y2="18" stroke="#2E1F0F" stroke-width="1"/>
+                <line x1="22" y1="8" x2="22" y2="40" stroke="#2E1F0F" stroke-width="1"/>
+                <path d="M14 26 L18 30 L26 22" stroke="#A86B44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             )}
           </div>
           <h3 class="service-card__title">{title}</h3>
           <p class="service-card__desc">{desc}</p>
-          <a href={href} class="service-card__link">詳しく見る <span aria-hidden="true">→</span></a>
         </article>
       ))}
     </div>
@@ -81,31 +77,12 @@ const services = [
     background: var(--color-white);
     padding: var(--space-lg) var(--space-md);
     border: 1px solid var(--color-border);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    background: var(--color-gold);
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
 
   .service-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
-  }
-
-  .service-card:hover::before {
-    transform: scaleY(1);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-card);
   }
 
   .service-card__icon {
@@ -128,23 +105,13 @@ const services = [
     line-height: 1.85;
   }
 
-  .service-card__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: var(--space-md);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--color-gold);
-    transition: gap var(--transition);
+@media (max-width: 900px) {
+    .services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  .service-card__link:hover {
-    gap: 0.7rem;
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 560px) {
     .services__grid {
       grid-template-columns: 1fr;
     }

@@ -1,22 +1,10 @@
 ---
-const services = [
-  '売買仲介',
-  '資産運用コンサルティング',
-  '賃貸・管理',
-  '相続・贈与',
-];
-
-const company = [
-  { label: '会社概要', href: '/#company' },
-  { label: 'アクセス', href: '/#access' },
-  { label: '採用情報', href: '/recruit' },
-];
-
-const info = [
-  { label: '不動産購入ガイド', href: '/guide/buy' },
-  { label: '売却の流れ', href: '/guide/sell' },
-  { label: 'よくある質問', href: '/faq' },
-  { label: 'お知らせ', href: '/#news' },
+const navLinks = [
+  { label: 'サービス案内', href: '/#services' },
+  { label: '物件情報',     href: '/properties' },
+  { label: '会社概要',     href: '/#company' },
+  { label: 'アクセス',     href: '/#access' },
+  { label: 'お問い合わせ', href: '/contact' },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -28,7 +16,7 @@ const currentYear = new Date().getFullYear();
       <!-- ブランド -->
       <div class="footer__brand">
         <a href="/" class="footer__brand-link" aria-label="P-TRUST トップページ">
-          <img src="/images/logo.svg" alt="P-TRUST" class="footer__logo-img" width="80" height="67" />
+          <img src="/images/P-TRUST-5.svg" alt="P-TRUST" class="footer__logo-img" width="80" height="67" />
         </a>
         <p class="footer__tagline">
           信頼と誠実を軸に、<br />
@@ -38,37 +26,15 @@ const currentYear = new Date().getFullYear();
         <address class="footer__address">
           〒157-0077<br />
           東京都世田谷区鎌田3-18-15 ロフティー玉川<br />
-          TEL: <a href="tel:0368057608">03-6805-7608</a>
-          &nbsp;/&nbsp;
-          FAX: 03-6805-7609
+          <a href="mailto:yamashita@ptrust-web.com">yamashita@ptrust-web.com</a>
         </address>
       </div>
 
-      <!-- サービス -->
+      <!-- ナビゲーション -->
       <div>
-        <div class="footer__nav-title">Services</div>
+        <div class="footer__nav-title">Navigation</div>
         <ul class="footer__nav-list">
-          {services.map((s) => (
-            <li><a href="/services">{s}</a></li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- 会社情報 -->
-      <div>
-        <div class="footer__nav-title">Company</div>
-        <ul class="footer__nav-list">
-          {company.map(({ label, href }) => (
-            <li><a href={href}>{label}</a></li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- お役立ち情報 -->
-      <div>
-        <div class="footer__nav-title">Information</div>
-        <ul class="footer__nav-list">
-          {info.map(({ label, href }) => (
+          {navLinks.map(({ label, href }) => (
             <li><a href={href}>{label}</a></li>
           ))}
         </ul>
@@ -86,14 +52,14 @@ const currentYear = new Date().getFullYear();
 
 <style>
   .footer {
-    background: #111827;
+    background: #1A100A;
     color: var(--color-white);
     padding: var(--space-xl) 0 var(--space-md);
   }
 
   .footer__inner {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: var(--space-lg);
     margin-bottom: var(--space-xl);
   }
@@ -182,18 +148,14 @@ const currentYear = new Date().getFullYear();
     color: rgba(255, 255, 255, 0.6);
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     .footer__inner {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: var(--space-md);
     }
   }
 
   @media (max-width: 600px) {
-    .footer__inner {
-      grid-template-columns: 1fr;
-    }
-
     .footer__bottom {
       flex-direction: column;
       align-items: flex-start;

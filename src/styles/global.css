@@ -2,24 +2,24 @@
    P-TRUST Design Tokens
    ============================================ */
 :root {
-  /* カラーパレット */
-  --color-navy:        #1C2B4A;
-  --color-navy-light:  #2E4070;
-  --color-navy-pale:   #EEF1F7;
-  --color-gold:        #B8965A;
-  --color-gold-light:  #D4AF7A;
+  /* カラーパレット — アースカラー */
+  --color-navy:        #2E1F0F;   /* deep warm brown */
+  --color-navy-light:  #5C3D22;   /* medium brown */
+  --color-navy-pale:   #EDE0CE;   /* pale sand */
+  --color-gold:        #A86B44;   /* terracotta */
+  --color-gold-light:  #C68B62;   /* light terracotta */
   --color-white:       #FFFFFF;
-  --color-bg:          #F8F7F4;
-  --color-bg-warm:     #F3F0EA;
-  --color-text:        #1C2B4A;
-  --color-text-mid:    #4A5568;
-  --color-text-light:  #8C96A8;
-  --color-border:      #DDD9D0;
+  --color-bg:          #F7F2EA;   /* warm off-white */
+  --color-bg-warm:     #EDE4D6;   /* warm sand */
+  --color-text:        #1E1209;   /* dark warm brown */
+  --color-text-mid:    #6B5040;   /* medium warm brown */
+  --color-text-light:  #A08878;   /* muted warm brown */
+  --color-border:      #D8CCBA;   /* warm beige */
 
   /* タイポグラフィ */
   --font-serif-ja: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
   --font-sans-ja:  'Noto Sans JP', 'Hiragino Sans', sans-serif;
-  --font-serif-en: 'Playfair Display', Georgia, serif;
+  --font-serif-en: 'Cormorant Garamond', Georgia, serif;
   --font-sans-en:  system-ui, -apple-system, sans-serif;
 
   /* スペーシング */
@@ -30,8 +30,8 @@
   --space-xl:  6rem;
 
   /* シャドウ */
-  --shadow-card:  0 2px 20px rgba(28, 43, 74, 0.08);
-  --shadow-hover: 0 8px 40px rgba(28, 43, 74, 0.14);
+  --shadow-card:  0 2px 20px rgba(46, 31, 15, 0.07);
+  --shadow-hover: 0 8px 36px rgba(46, 31, 15, 0.12);
 
   /* トランジション */
   --transition: 0.3s ease;
@@ -105,33 +105,26 @@ a {
 /* 見出しパターン */
 .section-label {
   font-family: var(--font-sans-en);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--color-gold);
+  color: var(--color-text-light);
   display: block;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 0.6rem;
 }
 
 .section-title {
   font-family: var(--font-serif-ja);
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 400;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  font-weight: 300;
   line-height: 1.4;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
 }
 
 .divider {
-  width: 40px;
-  height: 1px;
-  background: var(--color-gold);
-  margin: var(--space-sm) 0 var(--space-md);
-}
-
-.divider--center {
-  margin-left: auto;
-  margin-right: auto;
+  display: none;
 }
 
 /* ボタン */
@@ -144,6 +137,7 @@ a {
   font-weight: 500;
   letter-spacing: 0.08em;
   padding: 0.9rem 2rem;
+  border-radius: 999px;
   transition: var(--transition);
   cursor: pointer;
   border: none;
@@ -201,6 +195,31 @@ a {
 .fade-in-delay-1 { animation-delay: 0.1s; }
 .fade-in-delay-2 { animation-delay: 0.2s; }
 .fade-in-delay-3 { animation-delay: 0.3s; }
+
+/* ============================================
+   レスポンシブ スペーシング
+   ============================================ */
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 3.5rem;
+    --space-lg: 2rem;
+  }
+
+  .container {
+    padding: 0 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-xl: 2.5rem;
+    --space-lg: 1.75rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}
 
 /* モーション軽減設定に配慮 */
 @media (prefers-reduced-motion: reduce) {

@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
-import TrustBar from '@/components/TrustBar.astro';
-import NewsSection from '@/components/NewsSection.astro';
 import ServicesSection from '@/components/ServicesSection.astro';
 import PropertyCard from '@/components/PropertyCard.astro';
 import CompanySection from '@/components/CompanySection.astro';
@@ -13,45 +11,13 @@ import { getProperties } from '@/lib/microcms';
 // microCMS から新着物件を3件取得
 let featuredProperties: any[] = [];
 try {
-  const res = await getProperties({ limit: 3, filters: 'status[equals]販売中' });
+  const res = await getProperties({ limit: 3 });
   featuredProperties = res.contents;
 } catch {
-  // microCMS 未設定時はダミーデータを表示
   featuredProperties = [
-    {
-      id: 'sample-1',
-      title: 'グランドステージ用賀',
-      area: '東京都世田谷区',
-      type: '売買',
-      status: '販売中',
-      price: 8500,
-      layout: '3LDK',
-      areaSize: 78.5,
-      age: 5,
-    },
-    {
-      id: 'sample-2',
-      title: 'ライオンズ二子玉川',
-      area: '東京都世田谷区 二子玉川',
-      type: '売買',
-      status: '新着',
-      price: 6200,
-      layout: '2LDK',
-      areaSize: 62.3,
-      age: 10,
-    },
-    {
-      id: 'sample-3',
-      title: '鎌田4丁目 一戸建て',
-      area: '東京都世田谷区 鎌田',
-      type: '売買',
-      status: '販売中',
-      price: 12000,
-      priceUnit: '万円',
-      layout: '4LDK',
-      areaSize: 120.0,
-      age: null,
-    },
+    { id: 'sample-1', title: 'グランドステージ用賀',    type: '売買', price: '8,500万円' },
+    { id: 'sample-2', title: 'ライオンズ二子玉川',       type: '売買', price: '6,200万円' },
+    { id: 'sample-3', title: '鎌田4丁目 一戸建て',       type: '売買', price: '1億2,000万円' },
   ];
 }
 ---
@@ -76,9 +42,6 @@ try {
   }}
 >
   <Hero />
-  <TrustBar />
-  <NewsSection />
-  <div class="section-divider" aria-hidden="true"></div>
   <ServicesSection />
 
   <!-- おすすめ物件 -->
@@ -86,24 +49,18 @@ try {
     <div class="container">
       <div class="properties__header">
         <span class="section-label">Properties</span>
-        <h2 class="section-title">おすすめ物件</h2>
+        <h2 class="section-title">物件情報</h2>
         <div class="divider divider--center"></div>
-        <a href="/properties" class="btn btn--outline">物件一覧を見る</a>
+        <a href="/properties" class="btn btn--outline">もっと見る</a>
       </div>
 
       <div class="properties__grid">
         {featuredProperties.map((p) => (
           <PropertyCard
             title={p.title}
-            area={p.area}
             type={p.type}
-            status={p.status}
             price={p.price}
-            priceUnit={p.priceUnit ?? '万円'}
-            layout={p.layout}
-            areaSize={p.areaSize}
-            age={p.age}
-            image={p.image?.[0]?.url}
+            image={p.image?.url}
             slug={p.id}
           />
         ))}
@@ -117,12 +74,6 @@ try {
 </BaseLayout>
 
 <style>
-  .section-divider {
-    height: 4px;
-    background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-    opacity: 0.4;
-  }
-
   .properties__header {
     text-align: center;
     margin-bottom: var(--space-lg);
