@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { title, type, price, image, slug } = Astro.props;
+const isSoldOut = type === '完売';
 ---
 
 <article class="property-card">
@@ -18,7 +19,7 @@ const { title, type, price, image, slug } = Astro.props;
         ? <img src={image} alt={title} class="property-card__img" width="400" height="260" loading="lazy" />
         : <div class="property-card__img-placeholder" aria-hidden="true">物件写真</div>
       }
-      <span class="property-card__type">{type}</span>
+      <span class:list={['property-card__type', { 'property-card__type--soldout': isSoldOut }]}>{type}</span>
     </div>
 
     <div class="property-card__body">
@@ -86,6 +87,10 @@ const { title, type, price, image, slug } = Astro.props;
     border-radius: 999px;
     background: var(--color-navy);
     color: var(--color-white);
+  }
+
+  .property-card__type--soldout {
+    background: #C0392B;
   }
 
   /* テキスト */
