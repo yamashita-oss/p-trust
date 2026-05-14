@@ -35,8 +35,8 @@ export interface Property {
   price: string;
   /** 物件画像 */
   image?: MicroCMSImage;
-  /** 物件PDF資料 */
-  pdf?: { url: string };
+  /** 物件資料画像 */
+  pdf?: MicroCMSImage;
 }
 
 export interface NewsArticle {
