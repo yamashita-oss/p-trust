@@ -24,13 +24,12 @@ import PageHeader from '@/components/PageHeader.astro';
 
       </div>
 
-      <!-- Netlify Forms: data-netlify="true" が必須 -->
       <form
         name="contact"
         method="POST"
         action="/thanks"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
+        netlify
+        netlify-honeypot="bot-field"
         class="contact-form"
         novalidate
       >
