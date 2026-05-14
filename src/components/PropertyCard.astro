@@ -13,6 +13,15 @@ const isSoldOut = type === '完売';
 ---
 
 <article class="property-card">
+  {documentUrl && (
+    <a
+      href={documentUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="property-card__link"
+      aria-label={`${title}の資料を見る`}
+    ></a>
+  )}
   <div class="property-card__inner">
 
     <div class="property-card__image-wrap">
@@ -26,22 +35,6 @@ const isSoldOut = type === '完売';
     <div class="property-card__body">
       <div class="property-card__title">{title}</div>
       <div class="property-card__price">{price}</div>
-      {documentUrl && (
-        <a
-          href={documentUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="property-card__pdf"
-          aria-label={`${title}の資料を開く`}
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M2 1h7l3 3v9H2V1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M9 1v3h3" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M4 7h6M4 9.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          PDF資料を見る
-        </a>
-      )}
     </div>
 
   </div>
@@ -49,19 +42,26 @@ const isSoldOut = type === '完売';
 
 <style>
   .property-card {
+    position: relative;
     border: 1px solid var(--color-border);
     overflow: hidden;
     transition: border-color var(--transition), box-shadow var(--transition);
   }
 
-  .property-card:hover {
+  .property-card:has(.property-card__link):hover {
     border-color: var(--color-gold);
     box-shadow: var(--shadow-card);
+    cursor: pointer;
+  }
+
+  .property-card__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
 
   .property-card__inner {
     display: block;
-    cursor: default;
   }
 
   /* 画像 */
@@ -133,23 +133,4 @@ const isSoldOut = type === '完売';
     letter-spacing: 0.02em;
   }
 
-  .property-card__pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.75rem;
-    font-size: 0.75rem;
-    font-family: var(--font-sans-ja);
-    color: var(--color-gold);
-    border: 1px solid var(--color-gold);
-    padding: 0.3rem 0.75rem;
-    border-radius: 2px;
-    transition: background var(--transition), color var(--transition);
-    text-decoration: none;
-  }
-
-  .property-card__pdf:hover {
-    background: var(--color-gold);
-    color: var(--color-white);
-  }
 </style>

@@ -40,6 +40,15 @@ try {
       <ul class="property-list">
         {properties.map((p) => (
           <li class="property-row">
+            {p.document?.url && (
+              <a
+                href={p.document.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="property-row__link"
+                aria-label={`${p.title}の資料を見る`}
+              ></a>
+            )}
             <div class="property-row__inner">
 
               <div class="property-row__image">
@@ -53,22 +62,6 @@ try {
                 <span class="property-row__type">{p.type}</span>
                 <div class="property-row__title">{p.title}</div>
                 <div class="property-row__price">{p.price}</div>
-                {p.document?.url && (
-                  <a
-                    href={p.document.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="property-row__pdf"
-                    aria-label={`${p.title}の資料を開く`}
-                  >
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                      <path d="M2 1h7l3 3v9H2V1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-                      <path d="M9 1v3h3" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-                      <path d="M4 7h6M4 9.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                    </svg>
-                    PDF資料を見る
-                  </a>
-                )}
               </div>
 
             </div>
@@ -93,7 +86,19 @@ try {
   }
 
   .property-row {
+    position: relative;
     border-bottom: 1px solid var(--color-border);
+  }
+
+  .property-row__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .property-row:has(.property-row__link):hover {
+    background: var(--color-navy-pale);
+    cursor: pointer;
   }
 
   .property-row__inner {
@@ -102,7 +107,6 @@ try {
     gap: var(--space-md);
     align-items: center;
     padding: var(--space-md) 0.5rem;
-    cursor: default;
   }
 
   /* 画像 */
@@ -166,25 +170,6 @@ try {
     letter-spacing: 0.02em;
   }
 
-  .property-row__pdf {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 0.75rem;
-    font-size: 0.75rem;
-    font-family: var(--font-sans-ja);
-    color: var(--color-gold);
-    border: 1px solid var(--color-gold);
-    padding: 0.3rem 0.75rem;
-    border-radius: 2px;
-    transition: background var(--transition), color var(--transition);
-    text-decoration: none;
-  }
-
-  .property-row__pdf:hover {
-    background: var(--color-gold);
-    color: var(--color-white);
-  }
 
   /* タブレット */
   @media (max-width: 768px) {
