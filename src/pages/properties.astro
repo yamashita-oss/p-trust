@@ -59,7 +59,7 @@ try {
               </div>
 
               <div class="property-row__body">
-                <span class="property-row__type" style={p.type === '完売' ? 'background:#C0392B' : ''}>{p.type}</span>
+                <span class="property-row__type" style={String(p.type) === '完売' ? 'background:#C0392B' : ''}>{String(p.type)}</span>
                 <div class="property-row__title">{p.title}</div>
                 <div class="property-row__price">{p.price}</div>
               </div>

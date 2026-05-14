@@ -9,7 +9,8 @@ interface Props {
 }
 
 const { title, type, price, image, slug, documentUrl } = Astro.props;
-const isSoldOut = type === '完売';
+const typeStr = String(type);
+const isSoldOut = typeStr === '完売';
 ---
 
 <article class="property-card">
@@ -29,7 +30,7 @@ const isSoldOut = type === '完売';
         ? <img src={image} alt={title} class="property-card__img" width="400" height="260" loading="lazy" />
         : <div class="property-card__img-placeholder" aria-hidden="true">物件写真</div>
       }
-      <span class="property-card__type" style={isSoldOut ? 'background:#C0392B' : ''}>{type}</span>
+      <span class="property-card__type" style={isSoldOut ? 'background:#C0392B' : ''}>{typeStr}</span>
     </div>
 
     <div class="property-card__body">
