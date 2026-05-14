@@ -36,7 +36,7 @@ export interface Property {
   /** 物件画像 */
   image?: MicroCMSImage;
   /** 物件資料画像 */
-  pdf?: MicroCMSImage;
+  document?: MicroCMSImage;
 }
 
 export interface NewsArticle {

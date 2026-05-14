@@ -53,13 +53,13 @@ try {
                 <span class="property-row__type">{p.type}</span>
                 <div class="property-row__title">{p.title}</div>
                 <div class="property-row__price">{p.price}</div>
-                {p.pdf?.url && (
+                {p.document?.url && (
                   <a
-                    href={p.pdf.url}
+                    href={p.document.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="property-row__pdf"
-                    aria-label={`${p.title}のPDF資料を開く`}
+                    aria-label={`${p.title}の資料を開く`}
                   >
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                       <path d="M2 1h7l3 3v9H2V1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>

@@ -5,10 +5,10 @@ interface Props {
   price: string;
   image?: string;
   slug: string;
-  pdfUrl?: string;
+  documentUrl?: string;
 }
 
-const { title, type, price, image, slug, pdfUrl } = Astro.props;
+const { title, type, price, image, slug, documentUrl } = Astro.props;
 const isSoldOut = type === '完売';
 ---
 
@@ -26,13 +26,13 @@ const isSoldOut = type === '完売';
     <div class="property-card__body">
       <div class="property-card__title">{title}</div>
       <div class="property-card__price">{price}</div>
-      {pdfUrl && (
+      {documentUrl && (
         <a
-          href={pdfUrl}
+          href={documentUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="property-card__pdf"
-          aria-label={`${title}のPDF資料を開く`}
+          aria-label={`${title}の資料を開く`}
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M2 1h7l3 3v9H2V1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
