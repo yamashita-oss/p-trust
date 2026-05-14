@@ -17,10 +17,11 @@
   --color-border:      #D8CCBA;   /* warm beige */
 
   /* タイポグラフィ */
-  --font-serif-ja: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
-  --font-sans-ja:  'Noto Sans JP', 'Hiragino Sans', sans-serif;
-  --font-serif-en: 'Cormorant Garamond', Georgia, serif;
-  --font-sans-en:  system-ui, -apple-system, sans-serif;
+  --font-serif-ja:   'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+  --font-sans-ja:    'Noto Sans JP', 'Hiragino Sans', sans-serif;
+  --font-serif-en:   'Cormorant Garamond', Georgia, serif;
+  --font-sans-en:    system-ui, -apple-system, sans-serif;
+  --font-casual-ja:  'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
 
   /* スペーシング */
   --space-xs:  0.5rem;
