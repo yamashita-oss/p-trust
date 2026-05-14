@@ -59,7 +59,7 @@ try {
               </div>
 
               <div class="property-row__body">
-                <span class:list={['property-row__type', { 'property-row__type--soldout': p.type === '完売' }]}>{p.type}</span>
+                <span class="property-row__type" style={p.type === '完売' ? 'background:#C0392B' : ''}>{p.type}</span>
                 <div class="property-row__title">{p.title}</div>
                 <div class="property-row__price">{p.price}</div>
               </div>
@@ -152,9 +152,6 @@ try {
     margin-bottom: 0.6rem;
   }
 
-  .property-row__type.property-row__type--soldout {
-    background: #C0392B;
-  }
 
   .property-row__title {
     font-family: var(--font-serif-ja);
