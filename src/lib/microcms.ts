@@ -14,7 +14,7 @@ function getClient() {
 // 型定義
 // ============================================
 
-export type PropertyType = '売買' | '賃貸' | '投資';
+export type PropertyType = '売買' | '賃貸' | '投資' | '完売';
 
 export interface MicroCMSImage {
   url: string;
