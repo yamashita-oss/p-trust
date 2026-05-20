@@ -51,7 +51,10 @@ try {
         <span class="section-label">Properties</span>
         <h2 class="section-title">物件情報</h2>
         <div class="divider divider--center"></div>
-        <a href="/properties" class="btn btn--outline">もっと見る</a>
+        {featuredProperties.length > 0
+          ? <a href="/properties" class="btn btn--outline">もっと見る</a>
+          : <span class="properties__coming-soon">準備中...</span>
+        }
       </div>
 
       <div class="properties__grid">
@@ -84,21 +87,40 @@ try {
     margin-top: var(--space-md);
   }
 
+  .properties__coming-soon {
+    display: inline-block;
+    margin-top: var(--space-md);
+    padding: 0.4rem 1.2rem;
+    border-radius: 999px;
+    background: #f0f0f0;
+    color: #999;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    cursor: default;
+    user-select: none;
+  }
+
   .properties__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
   }
 
+  .properties__grid :global(.property-card) {
+    flex: 0 0 calc(33.333% - 1rem);
+    min-width: 0;
+  }
+
   @media (max-width: 900px) {
-    .properties__grid {
-      grid-template-columns: repeat(2, 1fr);
+    .properties__grid :global(.property-card) {
+      flex: 0 0 calc(50% - 0.75rem);
     }
   }
 
   @media (max-width: 600px) {
-    .properties__grid {
-      grid-template-columns: 1fr;
+    .properties__grid :global(.property-card) {
+      flex: 0 0 100%;
     }
   }
 </style>
